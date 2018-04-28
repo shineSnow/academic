@@ -1,6 +1,6 @@
 #     Academic-Fed  
 ## 参考博客
-[1.FareBlog](https://blog.csdn.net/faremax)
+[1.FareBlog](https://blog.csdn.net/faremax)  
 [1.BBBB](https://segmentfault.com/a/1190000013508719)
 ## 问题列表  
 ### js问题
