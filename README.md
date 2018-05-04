@@ -4,7 +4,7 @@
 [1.BBBB](https://segmentfault.com/a/1190000013508719)
 ## 问题列表  
 ### js问题
-[2. 数组去重的几种方法？](http://www.baidu.com)  
+[2. 数组去重的几种方法？](https://github.com/shineSnow/academic/blob/master/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/index.html)  
 [2. JavaScript 里有哪些数据类型，解释清楚 null 和 undefined，解释清楚原始数据类型和引用数据类型？](http://www.baidu.com)  
 [2. 数组和对象有哪些原生方法，列举一下，分别是什么含义，比如链接两个数组用哪个方法，删除数组的质定项？](http://www.baidu.com)  
 [2. 经典问题 闭包？](http://www.baidu.com)  

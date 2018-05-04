@@ -97,8 +97,14 @@
 
     //方法6 利用ES6的set Set数据结构，它类似于数组，其成员的值都是唯一的。利用Array.from将Set结构转换成数组
 
+    function dedupe(array) {
+        return Array.form(new Set(array))
+    }
 
+    //或者使用拓展运算符
+    let arr =[...new Set(arra)]
 
+    // console.log('利用ES6的set Set数据结构', dedupe(arra)) //返回[3,4,2,1]
 </script>
 </body>
 </html>
