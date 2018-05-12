@@ -98,12 +98,80 @@ console.info(arr); // [1, 5, 10, 20, 25, 30]
 
 **concat()**  
 concat方法可以将多个数组合并成一个新的数组. concat可以接收的参数可以是数组, 也可以是非数组值.  
-> var arr1 = ['a', 'b', 'c'],
-    arr2 = ['x', 'y', 'z'],
-    val = 'hello';
-  var temp = arr1.concat(val, arr2);
-  console.info('arr1: ' + arr1); // arr1: a,b,c
-  console.info('arr2: ' + arr2); // arr2: x,y,z
-  console.info('val: ' + val); // val: hello
-  console.info('temp: ' + temp); // temp: a,b,c,hello,x,y,z
+```$xslt
+var arr1 = ['a', 'b', 'c'],
+  arr2 = ['x', 'y', 'z'],
+  val = 'hello';
+var temp = arr1.concat(val, arr2);
+console.info('arr1: ' + arr1); // arr1: a,b,c
+console.info('arr2: ' + arr2); // arr2: x,y,z
+console.info('val: ' + val); // val: hello
+console.info('temp: ' + temp); // temp: a,b,c,hello,x,y,z
+```  
+concat方法并不操作原数组, 而是新创建一个数组, 然后将调用它的对象中的每一项以及参数中的每一项或非数组参数依次放入新数组中, 并且返回这个新数组.
+
+concat方法并不操作调用它的数组本身, 也不操作各参数数组, 而是将它们的每个元素拷贝一份放到新创建的数组中. 而拷贝的过程, 对于对象类型来说, 是将对象引用复制一份放到新数组中, 而对于基本类型来说, 是将其值放到新数组中.  
+
+**slice()方法**  
+
+slice()方法可以基于原数组的部分元素，对其进行浅拷贝，返回包括从开始到结束（不包括结束位置）位置的元素的新数组。  
+```$xslt
+var arr = ['a', 'b', 'c', 'd', 'e'];
+var temp1 = arr.slice(),
+  temp2 = arr.slice(1),
+  temp3 = arr.slice(1, 2);
+console.info(arr); // ["a", "b", "c", "d", "e"]
+console.info(temp1); // ["a", "b", "c", "d", "e"]
+console.info(temp2); // ["b", "c", "d", "e"]
+console.info(temp3); // ["b"]
+```  
+从示例中可以看出:
+
+* slice方法并没有操作原数组, 而是创建了一个新的数组.
+* 当没有传参数给slice方法时, 则返回从索引0开始拷贝的新数组.
+* 传入一个参数, 如: arr.slice(1), 表示从索引1位置开始拷贝, 一直到原数组的最后一个元素.
+* 传入两个参数, 如: arr.slice(1, 2), 表示从索引1位置开始拷贝, 一直拷贝到位置2但不包括位置2上的元素.  
+参数如果为负数, 表示从数组最后面的元素可以算起.
+
+slice方法同样不操作调用它的数组本身, 而是将原数组的每个元素拷贝一份放到新创建的数组中. 而拷贝的过程, 也于concat方法相同.  
+
+**splice()方法**  
+
+splice()算是数组中最强大的方法了，可以对数组进行，删除，插入，替换，在任意位置对数组进行操作，具体看下面：  
+
+**删除**  
+
+当给splice方法中传入一个或两个参数时, 就可以从数组中删除任意元素.  
+传入一个参数: 要删除的的第一个元素的位置, 此时将会删除从要删除的第一个元素的位置起, 后面的所有元素.
+传入两个参数: 要删除的第一个元素的位置和要删除的项数,
+返回值均为删除的元素组成的数组, 例如:  
+```$xslt
+var arr = ['a', 'b', 'c', 'd', 'e'];
+var temp = arr.splice(2);
+console.info(arr); // ["a", "b"]
+console.info(temp); // ["c", "d", "e"]  
+  
+arr = ['a', 'b', 'c', 'd', 'e'];
+temp = arr.splice(2, 2);
+console.info(arr); // ["a", "b", "e"]
+console.info(temp); // ["c", "d"]
+```  
+**插入**  
+
+使用splice方法可以向数组的指定位置插入任务数量的元素, 此时需要提供三个参数: 起始位置(要插入的位置), 0(表示要删除的项数, 0为不删除), 要插入的元素, 如果要插入多个元素可以添加更多的参数, 例如:  
+```$xslt
+var arr = ['a', 'b', 'c', 'd', 'e'];
+var temp = arr.splice(2, 0, 'x', 'y', 'z');
+console.info(arr); // ["a", "b", "x", "y", "z", "c", "d", "e"]
+console.info(temp); // [], 并没有删除元素
+```  
+**替换**  
+
+当splice接收三个参数, 且第二个参数不为0时, 可达到在数组中替换元素的效果. 例如:  
+```$xslt
+var arr = ['a', 'b', 'c', 'd', 'e'];
+var temp = arr.splice(2, 2, 'x', 'y', 'z');
+console.info(arr); // ["a", "b", "x", "y", "z", "e"]
+console.info(temp); // ["c", "d"]
+```
 
