@@ -17,8 +17,7 @@ function repeatStr(str,n) {
 repeatStr("abc",3)   // abcabcabc
 ```
 
-2. push()和pop()   
-push方法和pop方法, 可以使数组的行为类似于栈, 先进后出, 并且推入和弹出操作只发生在一端.   
+2. push()和pop()。push方法和pop方法, 可以使数组的行为类似于栈, 先进后出, 并且推入和弹出操作只发生在一端.   
  
 push()方法，可以接受一个或者多个参数，把他们加载在数组的末尾，并返回修改后的数组长度。
 ```$xslt
@@ -44,5 +43,7 @@ var temp = arr.pop();
 console.info('temp: ' + temp); // temp: e
 console.info('length: ' + arr.length); // length: 4
 ```
+__3.shiift()和unshift().__  
+队列的访问规则是先进先出, 并且队尾添加项, 队头移除项. push方法和shift方法结合使用, 就可以像操作队列一样操作数组.  
 
     
