@@ -45,5 +45,65 @@ console.info('length: ' + arr.length); // length: 4
 ```
 __3.shiift()和unshift().__  
 队列的访问规则是先进先出, 并且队尾添加项, 队头移除项. push方法和shift方法结合使用, 就可以像操作队列一样操作数组.  
+__shift()方法__  
+shift()方法将删除数组的第一项，将数组长度-1，并且返回删除的项。
+```$xslt
+var arr = ['a', 'b', 'c', 'd', 'e'];
+var temp = arr.shift();
+console.info('temp: ' + temp); // temp: a
+console.info('length: ' + arr.length); // length: 4
+```
+__unshift()方法__
+unshift()方法可以接受一个或者多个参数，把他们依次添加到数组前端，并返回改变后的数组长度。
+```$xslt
+var arr = ['a', 'b', 'c', 'd', 'e'];
+var temp = arr.unshift('x', 'y', 'z');
+console.info('temp: ' + temp); // temp: 8
+console.info(arr); // ["x", "y", "z", "a", "b", "c", "d", "e"]
+```
+**重新排序**  
+reverse()和sort()方法  
+其中reverse()是用来翻转数组的，
+```$xslt
+var arr = [1, 3, 2, 5, 4];
+arr.reverse();
+console.info(arr); // [4, 5, 2, 3, 1]  
+```
+关于sort方法, 默认情况下, 它是对数组的每一项进行升序排列, 即最小的值在前面. 但sort方法会调用toString方法将每一项转成字符串进行比较(字符串通过Unicode位点进行排序), 那么这种比较方案在多数情况下并不是最佳方案. 例如:
+```$xslt
 
-    
+var arr = [1, 3, 2, 5, 4];
+arr.sort();
+console.info(arr); // [1, 2, 3, 4, 5]
+
+arr = [1, 5, 10, 20, 25, 30];
+arr.sort();
+console.info(arr); // [1, 10, 20, 25, 30, 5]
+```  
+因此, sort方法可以接收一个比较函数作为参数, 由我们来决定排序的规则. 比较函数接收两个参数, 如果第一个参数小于第二个参数(即第一个参数应在第二个参数之前)则返回一个负数, 如果两个参数相等则返回0, 如果第一个参数大于第二个参数则返回一个正数, 例如:  
+```$xslt
+var arr = [1, 5, 10, 20, 25, 30];
+arr.sort(function(value1, value2){
+  if(value1 < value2) {
+    return -1;
+  } else if(value1 > value2) {
+    return 1;
+  } else {
+    return 0;
+  }
+});
+console.info(arr); // [1, 5, 10, 20, 25, 30]
+```  
+**操作方法**   
+
+**concat()**  
+concat方法可以将多个数组合并成一个新的数组. concat可以接收的参数可以是数组, 也可以是非数组值.  
+> var arr1 = ['a', 'b', 'c'],
+    arr2 = ['x', 'y', 'z'],
+    val = 'hello';
+  var temp = arr1.concat(val, arr2);
+  console.info('arr1: ' + arr1); // arr1: a,b,c
+  console.info('arr2: ' + arr2); // arr2: x,y,z
+  console.info('val: ' + val); // val: hello
+  console.info('temp: ' + temp); // temp: a,b,c,hello,x,y,z
+
