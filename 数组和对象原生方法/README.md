@@ -17,5 +17,32 @@ function repeatStr(str,n) {
 repeatStr("abc",3)   // abcabcabc
 ```
 
-2. push()和pop()
+2. push()和pop()   
+push方法和pop方法, 可以使数组的行为类似于栈, 先进后出, 并且推入和弹出操作只发生在一端.   
+ 
+push()方法，可以接受一个或者多个参数，把他们加载在数组的末尾，并返回修改后的数组长度。
+```$xslt
+var arr = ['a', 'b', 'c', 'd', 'e'];
+var temp = arr.push('f');
+console.info('temp: ' + temp); // temp: 6
+console.info(arr); // ["a", "b", "c", "d", "e", "f"]
+```
+Array.prototype.push.apply()合并两个数组
+```$xslt
+var arr1 = ['a', 'b', 'c'],
+  arr2 = ['x', 'y', 'z'];
+var temp = Array.prototype.push.apply(arr1, arr2);
+console.info(arr1); // ["a", "b", "c", "x", "y", "z"]
+console.info(arr2); // ["x", "y", "z"]
+console.info(temp); // 6
+```
+其实是apply()转换了this对象，并且带参数传过去。  
+pop()方法 将数组最后一项删除，数组长度-1，并且返回删除的项。
+```$xslt
+var arr = ['a', 'b', 'c', 'd', 'e'];
+var temp = arr.pop();
+console.info('temp: ' + temp); // temp: e
+console.info('length: ' + arr.length); // length: 4
+```
+
     
