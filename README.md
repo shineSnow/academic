@@ -2,7 +2,7 @@
 ##Thinking is more important than the answer.
 ## 参考博客
 [1.FareBlog](https://blog.csdn.net/faremax)    
-[1.BBBB](https://segmentfault.com/a/1190000013508719)
+[1.绅士汪](https://segmentfault.com/a/1190000013508719)
 ## 问题列表  
 ### js问题
 [1. 数组去重的几种方法？](https://github.com/shineSnow/academic/blob/master/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/index.html)  
@@ -21,6 +21,7 @@
 [14.动画：setTimeout何时执行，requestAnimationFrame的优点](http://www.baidu.com)  
 [15.jsonp原理、postMessage原理](http://www.baidu.com)  
 [16.怎样添加、移除、移动、复制、创建和查找节点](http://www.baidu.com) 
+[16.js精度超过16位的问题](https://segmentfault.com/q/1010000008250331) 
 #### 计算机基础
 [1. 说一下网络五层模型（HTTP协议从应用层到底层都基于哪些协议），HTTP 协议头字段说上来几个，缓存字段是怎么定义的，http和https的区别，在具体使用的时候有什么不一样。是否尽可能详细的掌握HTTP协议。](http://www.baidu,com)
 [2. 是否了解公钥加密和私钥加密。如何确保表单提交里的密码字段不被泄露。验证码是干嘛的，是为了解决什么安全问题。](http://www.baidu,com)
