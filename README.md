@@ -1,5 +1,5 @@
 #     Academic-Fed   
-##Thinking is more important than the answer.
+##  Thinking is more important than the answer.
 ## 参考博客
 [1.FareBlog](https://blog.csdn.net/faremax)    
 [1.绅士汪](https://segmentfault.com/a/1190000013508719)
