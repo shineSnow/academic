@@ -8,7 +8,7 @@
 ### js问题
 [1. 数组去重的几种方法？](https://github.com/shineSnow/academic/blob/master/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/index.html)  
 [2. JavaScript 里有哪些数据类型，解释清楚 null 和 undefined，解释清楚原始数据类型和引用数据类型？](https://github.com/shineSnow/academic/blob/master/js%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/README.md)  
-[3. 数组和对象有哪些原生方法，列举一下，分别是什么含义，比如链接两个数组用哪个方法，删除数组的特定项？](https://github.com/shineSnow/academic/blob/master/%E6%95%B0%E7%BB%84%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%8E%9F%E7%94%9F%E6%96%B9%E6%B3%95/README.md)  
+[3. 数组和对象有哪些原生方法，列举一下，分别是什么含义，比如链接两个数组用哪个方法，删除数组的特定项？](http://pre-test.motherbuy.com/index.html#/login)  
 [4. 经典问题 闭包？](http://www.baidu.com)  
 [5. 对作用域上下文和this的理解？](http://www.baidu.com)  
 [6. 实现一个函数clone，可以对JavaScript中的5种主要的数据类型（包括Number、String、Object、Array、Boolean）进行值复制？](http://www.baidu.com)  
