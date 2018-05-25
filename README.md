@@ -41,8 +41,8 @@
 [1.垂直居中都有哪些方法？](http://www.baidu.com)   
 [2.清除浮动，什么时候需要清除浮动，清除浮动都有哪些方法？](http://www.baidu.com)   
 [3.样式的层级关系，选择器优先级，样式冲突，以及抽离样式模块怎么写，说出思路，有无实践经验？](http://www.baidu.com)    
-[4.垂直居中都有哪些方法？](http://www.baidu.com)  
-[5.高清屏的1px问题,以及解决方法](https://segmentfault.com/q/1010000005692673)
+[4.高清屏的1px问题,以及解决方法](https://segmentfault.com/q/1010000005692673)
+[5.css經典佈局方法](https://segmentfault.com/q/1010000005692673)
 
 
 ### Html问题  
