@@ -82,4 +82,70 @@ console.log(Counter1.value()); /* logs 2 */
 Counter1.decrement();
 console.log(Counter1.value()); /* logs 1 */
 console.log(Counter2.value()); /* logs 0 */
-```
+```  
+
+该共享环境创建于一个立即执行的匿名函数体内。这个环境中包含两个私有项：名为 privateCounter 的变量和名为 changeBy 的函数。这两项都无法在这个匿名函数外部直接访问。必须通过匿名函数返回的三个公共函数访问。
+
+这三个公共函数是共享同一个环境的闭包。多亏 JavaScript 的词法作用域，它们都可以访问 privateCounter 变量和 changeBy 函数。
+
+在循环中创建闭包的常见的错误  
+```js
+function createFunctions(){
+    var result = new Array();
+    for (var i=0; i < 10; i++){
+        result[i] = function(){
+            return i;
+        };
+    }
+    return result;
+}
+var funcs = createFunctions();
+for (var i=0; i < funcs.length; i++){
+    console.log(funcs[i]());
+}
+
+```  
+第一次看一定会以为会按顺序输出0-9,可是真的会这样么? running:
+闭包
+
+输入的是10个10,这就是年轻的代价.之所以这样的原因,其实是涉及到(es5及其以前)js没有块级作用域的问题所导致的问题,因为createFunctions里的循环一结束,i其实已经变为10存贮在内存中. 这个问题有两种解决办法,es6的let,es6实现了块级作用域,另一种就是闭包了.
+
+最简单的let:  
+```js
+function createFunctions(){
+    var result = new Array();
+    for (let i=0; i < 10; i++){
+        result[i] = function(){
+            return i;
+        };
+    }
+    return result;
+}
+var funcs = createFunctions();
+for (var i=0; i < funcs.length; i++){
+    console.log(funcs[i]());
+}
+```  
+闭包的方法:  
+```js
+    function createFunctions(){
+    var result = new Array();
+    for (var i=0; i < 10; i++){
+        (function(i){
+            result[i] = function(){
+            return i;
+        };
+        })(i)
+    }
+    return result;
+}
+var funcs = createFunctions();
+for (var i=0; i < funcs.length; i++){
+    console.log(funcs[i]());
+}
+```  
+这次可以依次输出0-9,ok.
+
+### 参考链接
+
+[带你一分钟理解闭包--js面向对象编程](https://www.cnblogs.com/qieguo/p/5457040.html)
