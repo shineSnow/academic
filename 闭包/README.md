@@ -144,6 +144,7 @@ for (var i=0; i < funcs.length; i++){
     console.log(funcs[i]());
 }
 ```  
+
 这次可以依次输出0-9,ok.
 
 ### 参考链接
