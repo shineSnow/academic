@@ -47,6 +47,14 @@
             return param;
         }
     }
+    var newObj1 = lightClone(obj);
+    obj.name = 'wesday'
+    str = 'new  world'
+    
+    var newStr1 = lightClone(str)
+    console.log('浅拷贝')
+    console.log(newObj1)  // 返回obj
+    console.log(newStr1)   // new  world
 ```
 
 
