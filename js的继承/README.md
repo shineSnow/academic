@@ -4,4 +4,4 @@
 ##理解对象  
 这个可以看之前的文章[数组和对象的原生方法](https://github.com/shineSnow/academic/blob/master/%E6%95%B0%E7%BB%84%E5%92%8C%E5%AF%B9%E8%B1%A1%E5%8E%9F%E7%94%9F%E6%96%B9%E6%B3%95/%E5%AF%B9%E8%B1%A1.md).可以理解对象的本质.记下来就是要学会创建对象,然后在实现一个对象继承另一个对象的方法和属性,let us go.
 
-## 创建对象     
+## 创建对象        
