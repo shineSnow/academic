@@ -22,8 +22,8 @@
 [13.跨域问题，及其解决方案]()  
 [14.动画：setTimeout何时执行，requestAnimationFrame的优点]()  
 [15.jsonp原理、postMessage原理]()  
-[16.怎样添加、移除、移动、复制、创建和查找节点]() 
-[16.js精度超过16位的问题](https://segmentfault.com/q/1010000008250331)  
+[16.怎样添加、移除、移动、复制、创建和查找节点]()  
+[17.js精度超过16位的问题](https://segmentfault.com/q/1010000008250331)  
 #### vue
 #### react
 #### 计算机基础
