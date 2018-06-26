@@ -231,13 +231,141 @@ function Person(name,age,job) {
  其基本思想是:**利用原型让一个引用类型继承另一个引用类型的属性和方法。**  
 **简单回顾一下构造函数、原型和实例的关系:每 个构造函数都有一个原型对象，原型对象都包含一个指向构造函数的指针，而实例都包含一个指向原型 对象的内部指针。那么，假如我们让原型对象等于另一个类型的实例，结果会怎么样呢?显然，此时的 原型对象将包含一个指向另一个原型的指针，相应地，另一个原型中也包含着一个指向另一个构造函数 的指针。假如另一个原型又是另一个类型的实例，那么上述关系依然成立，如此层层递进，就构成了实 例与原型的链条。这就是所谓原型链的基本概念。**   
 
-以上是小红书关于原型链的解释，感觉已经很清晰，主要是让一个构造函数的原型 =  一个构造函数的实例 ->这个构造函数的原型，从而实现继承。     
 
-![prototype](https://github.com/shineSnow/academic/blob/master/img/prototype.jpg) 
-   
+以上是小红书关于原型链的解释，感觉已经很清晰，主要是让一个构造函数的原型=一个构造函数的实例 ->这个构造函数的原型，从而实现继承。     
+
+![prototype](https://github.com/shineSnow/academic/blob/master/img/prototype.jpg)    
+
+实现原型链的基本模式： 
+```js
+//父级构造函数
+function SuperType() {
+  this.property = true;
+}
+//父级原型添加方法
+SuperType.prototype.getSuPerValue = function() {
+  return this.property;
+}
+
+//子级构造函数  
+function SubType() {
+  this.subproperty = false;
+}
+
+//继承父级构造函数
+SubType.prototype = new SuperType();
+
+//子级原型添加方法
+SubType.prototype.getSubValue = function() {
+  return this.subproperty;
+}
+
+// 创建对象，相信这一步你是熟悉的哈
+
+var instance = new SubType();
+alert(instance.getSuPerValue());    //true  
+
+```
+创建方式：
+> 以上代码定义了两个类型:SuperType 和 SubType。每个类型分别有一个属性和一个方法。它们 的主要区别是 SubType 继承了 SuperType，而继承是通过创建 SuperType 的实例，并将该实例赋给 SubType.prototype 实现的。实现的本质是重写原型对象，代之以一个新类型的实例。换句话说，原 来存在于 SuperType 的实例中的所有属性和方法，现在也存在于 SubType.prototype 中了。在确立了 继承关系之后，我们给 SubType.prototype 添加了一个方法，这样就在继承了 SuperType 的属性和方 法的基础上又添加了一个新方法。   
+
+> 通过实现原型链，本质上扩展了原型搜索机制。当以读取模式访 问一个实例属性时，首先会在实例中搜索该属性。如果没有找到该属性，则会继续搜索实例的原型。在 通过原型链实现继承的情况下，搜索过程就得以沿着原型链继续向上。就拿上面的例子来说，调用 instance.getSuperValue()会经历三个搜索步骤:1)搜索实例;2)搜索 SubType.prototype; 3)搜索 SuperType.prototype，最后一步才会找到该方法。在找不到属性或方法的情况下，搜索过 程总是要一环一环地前行到原型链末端才会停下来。
+
+缺点：和上面的原型创建对象的问题一样，对于引用类型的属性，一个实例对其修改，会影响到所有实例。  
+```js
+function SuperType(){
+    
+        this.colors = ["red", "blue", "green"];
+}
+
+function SubType(){
+}
+//继承了 SuperType
+SubType.prototype = new SuperType();
+
+var instance1 = new SubType(); 
+
+instance1.colors.push("black");
+alert(instance1.colors); //"red,blue,green,black"
+
+var instance2 = new SubType(); 
+alert(instance2.colors); //"red,blue,green,black"
+```
+### 二，借用构造函数实现继承  
+
+这种技术的基本思想相当简单，即在子类型构造函数内部调用超类型构造函数。重点,函数只不过是在特定环境中执行代码的对象。因此通过使用apply（）和call()方法也可以在新创建的对象上执行构造函数，代码如下：  
+
+```js
+
+function SuperType(){
+    
+    this.colors = ["red", "blue", "green"];
+    
+ }
+ function SubType(){
+//继承了 SuperType
+    SuperType.call(this);
+}
+
+var instance1 = new SubType();
+instance1.colors.push("black");
+alert(instance1.colors);    //"red,blue,green,black"
+var instance2 = new SubType();
+alert(instance2.colors);    //"red,blue,green"
+  
+```
+
+缺点：
+> 如果仅仅是借用构造函数，那么也将无法避免构造函数模式存在的问题——方法都在构造函数中定 义，因此函数复用就无从谈起了。而且，在超类型的原型中定义的方法，对子类型而言也是不可见的，结 果所有类型都只能使用构造函数模式。考虑到这些问题，借用构造函数的技术也是很少单独使用的。
 
 
+### 三，组合继承   
+背后思路是使用原型链实现对原型属性和方法的继承。而通过构造函数来实现对实例属性的继承。这样，即通过在原型定义的方法实现了函数的复用，又能够保证每个实例都有自己的属性。perfect!   
 
+```js
+function SuperType(name) {
+  this.name = name;
+  this.colors=['red','blue','yellow']
+}
+
+SuperType.prototype.sayName = function() {
+  alert(this.name);
+}
+
+function SubType(name,age) {
+   //实现继承
+  SuperType.call(this,name);
+  this.age = age;
+}
+
+//继承方法
+SubType.prototype = new SuperType();
+SubType.prototype.constructor = SubType;
+SubType.prototype.sayAge = function() {
+  alert(this.age);
+}
+
+var instance1 = new SubType("author",29);
+instance1.colors.push("black");
+alert(instance1.colors) //red,blue,yellow,black
+instance1.sayName()   // author
+instance1.sayAge()    //29
+
+
+var instance2 =  new SubType("Greg",27);
+alert(instance2.colors)   //red,blue,yellow 
+instance2.sayName();   //Greg
+instance2.sayAge();    // 27
+```   
+> 在这个例子中，SuperType 构造函数定义了两个属性:name 和 colors。SuperType 的原型定义 了一个方法 sayName()。SubType 构造函数在调用 SuperType 构造函数时传入了 name 参数，紧接着 又定义了它自己的属性 age。然后，将 SuperType 的实例赋值给 SubType 的原型，然后又在该新原型 上定义了方法 sayAge()。这样一来，就可以让两个不同的 SubType 实例既分别拥有自己属性——包 括 colors 属性，又可以使用相同的方法了。  
+
+**实际上，是混合了以上两种继承方式**
+
+> 组合继承避免了原型链和借用构造函数的缺陷，融合了它们的优点，成为 JavaScript 中最常用的继承模式。而且，instanceof 和 isPrototypeOf()也能够用于识别基于组合继承创建的对象。   
+
+组合继承在实际使用在是最经常使用过的模式了，另外还有两种继承方式：原型式继承，寄生式继承，可以了解一下。  
+
+完结撒花✿✿ヽ(°▽°)ノ✿
 
 
 
