@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    p {
+      margin: 0 auto;
+    }
+
+    .container {
+      margin: 20px 30px;
+      color: white;
+      height: 400px;
+    }
+
+    .left {
+      position: relative;
+      float: left;
+      width:
+        200px;
+      margin-right: -200px;
+      background: red;
+      height: 400PX;
+    }
+
+    .right {
+      float: right;
+      width: 100%;
+      height: 400PX;
+    }
+
+    .right div {
+      margin-left: 200px;
+    }
+
+    .right div p {
+      background: green;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="left">
+      <p>左侧</p>
+    </div>
+    <div class="right">
+      <div>
+        <p>右侧自适应</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    //原生ajax
+    var xhr = new XMLHttpRequest();
+    xhr.open("方式", "地址", "是否异步")
+    xhr.send();
+
+    beforeCreate;
+    create;
+    beforeMount;
+    mounted;
+    beforeUpdate;
+    update;
+    beforeDestroy;
+    destroyed;
+    var xhr = null;
+    xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://www.baidu.com", false);
+    xhr.send();
+    xhr.onReadyStateChange(function () {
+      if (xhr.readyState === 4) {
+        success(xhr.responseText);
+      } else {
+        fial && fail(xhr.status)
+      }
+    })
+
+    const unique = function (arr) {
+      var obj = {};
+      var temp = [];
+      for (var i = 0; i < arr.length; i++) {
+        if (!obj[arr[i]]) {
+          obj[arr[i]] = 1;
+          temp.push(arr[i]);
+        }
+      }
+      return obj;
+
+    }
+  </script>
+</body>
+
+</html>
