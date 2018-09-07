@@ -3,7 +3,9 @@
 ## js
 ---
 ### 1. http的相关问题
- 1. https与http有什么区别?
+ 1. https与http有什么区别?
+ 2. http1.0和http2.0的区别?
+ 3. http常见的状态码?
 ### 1.前端页面性能优化.
 
 ### 2. 数组的相关操作(去重,排序,删除单个元素)
@@ -29,7 +31,7 @@
 ### 8. js 的作用域和作用域链
 ### 9. 前端缓存机制
 ### 10.前端的数据类型,数据类型的判断,浅拷贝和深拷贝
-### 11. 原生ajax,跨越,跨域的解决方案.
+### 11. 原生ajax,ajax的优缺点,跨越,跨域的解决方案.
 jsonp、 document.domain+iframe、window.name、window.postMessage、服务器上设置代理页面
 
 ### 12. 原生,vue,react,实现懒加载和预加载.
@@ -90,6 +92,12 @@ requestAnimationFrame(callback)//callback为回调函数
 ### 29.原生DOM操作
 技术点: dom的增删查改,dom各种的关系查找(父子,兄弟,祖先,孙子节点,前后节点,前后所有节点,除自己外的所有兄弟节点),节点类型,操纵节点属性,操纵样式class,文本.
 
+### 30.js代码的执行顺序问题
+[执行顺序](https://www.jb51.net/article/36755.htm)
+
+
+
+
 参考链接  
 [题目](https://juejin.im/entry/585ba05d128fe1006ddc956e)
 
@@ -136,6 +144,12 @@ BFC，块级格式化上下文，一个创建了新的BFC的盒子是独立布�
 ### 11. 解释下 CSS sprites，以及你要如何在页面或网站中使用它。
 
 `CSS Sprites`其实就是把网页中一些背景图片整合到一张图片文件中，再利用CSS的“background-image”，“background- repeat”，“background-position”的组合进行背景定位，background-position可以用数字能精确的定位出背景图片的位置。这样可以减少很多图片请求的开销，因为请求耗时比较长；请求虽然可以并发，但是也有限制，一般浏览器都是6个。对于未来而言，就不需要这样做了，因为有了`http2`。
+### 12.优雅降级与渐进增强
+### 13.xhtml是什么
+### 14.对css预编译器有所了解吗？less sass postcss
+
+
+
 
 
 ## html
@@ -160,3 +174,5 @@ BFC，块级格式化上下文，一个创建了新的BFC的盒子是独立布�
 3. [剑指offer niuke](https://www.nowcoder.com/discuss/49349?type=0&order=0&pos=6&page=1)
 4. [知乎](https://www.zhihu.com/search?type=content&q=%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98)
 5. [前端面试题大全](https://juejin.im/entry/56f06612731956005d3b6795)
+6. [面试流程](https://juejin.im/entry/584522c0a22b9d007a9f90e0)
+7. [问题参考-契合度5星](https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers)
