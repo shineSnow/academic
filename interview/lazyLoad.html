@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>laze load</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrapper {
+      width: 750px;
+      margin: 0 auto;
+      background: rgb(228, 247, 162)
+    }
+
+    ul {
+      padding: 30px 0;
+      list-style: none;
+      padding-top: 1800px;
+    }
+
+    .item {
+      background: rgb(127, 201, 113);
+    }
+
+    li img {
+      height: 477px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <ul class="list">
+      <li id="li" class="item"><img class="lazyimg lazyimg1" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536668888316&di=2507f347800a0218bac7d5b7aa3efb26&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3069461887%2C2943087415%26fm%3D214%26gp%3D0.jpg"
+          src="../img/test.jpg" alt=""></li>
+      <li id="li" class="item"><img class="lazyimg lazyimg2" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536668888316&di=2507f347800a0218bac7d5b7aa3efb26&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3069461887%2C2943087415%26fm%3D214%26gp%3D0.jpg"
+          src="../img/test.jpg" alt=""></li>
+      <li id="li" class="item"><img class="lazyimg lazyimg3" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536668888316&di=2507f347800a0218bac7d5b7aa3efb26&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3069461887%2C2943087415%26fm%3D214%26gp%3D0.jpg"
+          src="../img/test.jpg" alt=""></li>
+      <li id="li" class="item"><img class="lazyimg lazyimg4" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536668888316&di=2507f347800a0218bac7d5b7aa3efb26&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3069461887%2C2943087415%26fm%3D214%26gp%3D0.jpg"
+          src="../img/test.jpg" alt=""></li>
+      <li id="li" class="item"><img class="lazyimg lazyimg5" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536668888316&di=2507f347800a0218bac7d5b7aa3efb26&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3069461887%2C2943087415%26fm%3D214%26gp%3D0.jpg"
+          src="../img/test.jpg" alt=""></li>
+      <li id="li" class="item"><img class="lazyimg lazyimg6" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536668888316&di=2507f347800a0218bac7d5b7aa3efb26&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3069461887%2C2943087415%26fm%3D214%26gp%3D0.jpg"
+          src="../img/test.jpg" alt=""></li>
+      <li id="li" class="item"><img class="lazyimg lazyimg7" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536668888316&di=2507f347800a0218bac7d5b7aa3efb26&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3069461887%2C2943087415%26fm%3D214%26gp%3D0.jpg"
+          src="../img/test.jpg" alt=""></li>
+      <li id="li" class="item"><img class=" lazyimg lazyimg8" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536668888316&di=2507f347800a0218bac7d5b7aa3efb26&imgtype=jpg&src=http%3A%2F%2Fimg2.imgtn.bdimg.com%2Fit%2Fu%3D3069461887%2C2943087415%26fm%3D214%26gp%3D0.jpg"
+          src="../img/test.jpg" alt=""></li>
+    </ul>
+
+  </div>
+  <script>
+    var screenH = document.documentElement.clientHeight;
+    var imgList = document.querySelectorAll('.lazyimg');
+    var arr = Array.prototype.slice.call(imgList);
+
+
+    window.addEventListener("scroll", function (e) {
+      // var scrollTop = document.documentElement.scrollTop;
+      // var coond = document.querySelector('.lazyimg').getBoundingClientRect();
+
+      // var posTop = coond.top;
+      // console.log(scrollTop, screenH, posTop)
+
+      // if (posTop < (scrollTop + screenH)) {
+      //   console.log('元素进入视口,可以进行操作')
+      //   document.querySelector('.lazyimg').src = document.querySelector('.lazyimg').dataset.src
+      // }
+      clearTimeout(delay)
+      var delay = setTimeout(() => {
+        lazyLoad()
+
+      }, 300);
+
+
+    }, false)
+
+    function intoView(eleDom) {
+      var flag = false;
+      var scrollTop = document.documentElement.scrollTop;
+      var coondTop = eleDom.getBoundingClientRect().top;
+      console.log(scrollTop, screenH, coondTop)
+      if (screenH > coondTop - 700) {
+        flag = true;
+      }
+      return flag;
+    }
+
+    function lazyLoad() {
+      for (var i = 0; i < arr.length; i++) {
+        if (intoView(arr[i])) {
+          console.log(arr[i])
+          arr[i].src = arr[i].dataset.src;
+          arr.splice(i, 1)
+          console.log(arr.length)
+        }
+      }
+    }
+  </script>
+  <script>
+    var obj = {
+      ss: 1,
+      dd: 2,
+      ee: {
+        dd: 444
+      },
+      ary: [1, 2, 3, 4]
+    };
+
+    function deepClone(obj) {
+      var tempObj = Array.isArray(obj) ? [] : {};
+      if (obj && typeof obj === "object") {
+        for (var key in obj) {
+          if (obj[key] === deepClone) {
+            continue;
+          }
+          if (obj[key] && typeof obj[key] === 'object') {
+            tempObj[key] = deepClone(obj[key]);
+          } else {
+            tempObj[key] = obj[key];
+          }
+
+        }
+      }
+      return tempObj;
+    }
+
+    var n = deepClone(obj);
+    obj.ary.push("3333")
+
+    console.log(obj, n)
+  </script>
+</body>
+
+</html>
