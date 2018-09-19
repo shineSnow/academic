@@ -4,7 +4,8 @@
 ---
 ### 1. http的相关问题
  1. https与http有什么区别和联系?  
-    [https与http的区别和联系,以及加密的原理,过程,https的优缺点](https://blog.csdn.net/xionghuixionghui/article/details/68569282)
+    [https与http的区别和联系,以及加密的原理,过程,https的优缺点](https://blog.csdn.net/xionghuixionghui/article/details/68569282)  
+    [HTTPS握手](https://blog.csdn.net/hherima/article/details/52469674)
 
  2. http1.0, http1.1, http2.0的区别?  
     [参考](https://www.cnblogs.com/heluan/p/8620312.html)  
@@ -113,10 +114,68 @@
         HTTP 502 - 网关错误   
         HTTP 503：由于超载或停机维护，服务器目前无法使用，一段时间后可能恢复正常  
  4. TCP的三次握手与四次挥手（详解+动图）  
- [参考](https://blog.csdn.net/qzcsu/article/details/72861891)
+ [参考](https://blog.csdn.net/qzcsu/article/details/72861891)  
+
+    三次握手  
+        client -> server   SYN = 1,seq = x;  
+        server -> client   SYN = 1,ACK=1,seq= y,ack=x+1;  
+        client -> sever    ACK=1, seq = x+1,ack=y+1;    
+        数据传输
+
+    四次挥手  
+        client -> server FIN = 1,seq =u;  
+        server -> client ACK=1,seq=v,ack=u+1;  
+        传输数据  
+        server -> client FIN=1,ACK=1,seq=w,ack=u+1;   
+        client -> server ACK=1,seq=u+1.ack=w+1;  
+[http传输过程超详解](https://www.cnblogs.com/kongxy/p/4615226.html) 
+
+        页面渲染过程    
+    [页面渲染](https://www.cnblogs.com/dojo-lzz/p/3983335.html)  
+        现代浏览器渲染页面的过程是这样的：jiexiHTML以构建DOM树 –> 构建渲染树 –> 布局渲染树 –> 绘制渲染树。
+
+        DOM树是由HTML文件中的标签排列组成，渲染树是在DOM树中加入CSS或HTML中的style样式而形成。渲染树只包含需要显示在页面中的DOM元素，像<head>元素或display属性值为none的元素都不在渲染树中。
+
+        在浏览器还没接收到完整的HTML文件时，它就开始渲染页面了，在遇到外部链入的脚本标签或样式标签或图片时，会再次发送HTTP请求重复上述的步骤。在收到CSS文件后会对已经渲染的页面重新渲染，加入它们应有的样式，图片文件加载完立刻显示在相应位置。在这一过程中可能会触发页面的重绘或重排。
+
+        重绘或重排。 [连接](https://blog.csdn.net/qq_20544669/article/details/80494475)  
+            当DOM的变化影响了元素的几何属性（宽和高）——比如改变边框宽度或给段落增加文字，导致行数增加——浏览器需要重新计算元素的集合属性，同样其他元素的集合属性和位置也会受到影响。浏览器会使渲染树中受到影响的部分失效，并重新构造渲染树。这个过程称为“重排”。完成重排后，浏览器会重新绘制受影响的部分到屏幕中，该过程称为“重绘”（比如改变一个元素的背景色并不影响几何属性）。  
+
+            重排：当页面布局和几何属性改变时就需要“重排”。下述情况会发生重排：
+
+            添加或删除可见的DOM元素。
+            元素的位置、尺寸（内外边距、边框厚度、宽高等属性）改变
+            内容改变（文本改变或图片被另一个不同尺寸的图片替代）
+            页面渲染器初始化
+            浏览器窗口尺寸改变。
+              "重绘"不一定需要"重排"，比如改变某个网页元素的颜色，就只会触发"重绘"，不会触发"重排"，因为布局没有改变。但是，"重排"必然导致"重绘"，比如改变一个网页元素的位置，就会同时触发"重排"和"重绘"，因为布局改变了。
+        最小化重绘和重排 
+          重回和重排代价可能会很昂贵，因此一个好的提高程序响应速度的策略就是减少此类操作的发生。为了减少发生的次数，应该合并多次对DOM和样式的修改，然后依次处理掉。
+
+          上述示例中有三个样式被改变，每一个都会影响元素的几何结构，会导致浏览器触发三次重排，可以优化，合并操作 
+
+        1、使用cssText属性实现
+        var el = document.getElementById('myDiv');
+        el.style.cssText = 'border-left:1px; border-right: 2px; padding: 5px;'ar el = documen
+
+        2、修改css的class名称
+
+        批量修改DOM 
+          当需要对DOM元素进行一系列操作，可以通过以下步骤来减少重绘和重排的次数： 
+        1、使元素脱离文档流（重排） 
+        2、对应用多重改变 
+        3、把元素带回文档（重排）
+
+        有三种基本方法可以使DOM脱离文档流： 
+        1、隐藏元素，应用修改，重新显示 
+        2、使用文档片段在当前DOM之外构建一个子树，再把它拷贝回文档（推荐） 
+        3、将原始元素拷贝到一个脱离文档的节点中，修改副本，完成后再替换原始元素。
+
  5. 认识http的基本信息.  
  [重点参考链接,](http://www.cnblogs.com/ranyonsue/p/5984001.html)  
- [http详解搜索百度](https://blog.csdn.net/u013219814/article/details/56290792)
+ [http详解搜索百度](https://blog.csdn.net/u013219814/article/details/56290792)  
+ 6. http的七层协议
+ [http的七层协议](https://blog.csdn.net/a5582ddff/article/details/77731537)
 
 ### 1.加密算法-对称加密,非对称加密,创建的用户密码加密措施.
 [对称加密,非对称加密](http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html)
@@ -253,23 +312,30 @@ function quickSort(arr) {
 }
 ```
 
-    100. 斐波那契数组
+    100. 斐波那契数组前n项数组  1,1,2,3,5,8
 ```javascript
 function getFibonacci(n) {
     let fibarr = [];
-    let i=0;
-    while(i<n) {
-        if(i<=1) {
-            fibarr.push(i)
+    let i=1;
+    while(i<= n) {
+        if(i <=2) {
+            fibarr.push(1);
         } else {
-            filbarr.push(fibarr[i-1] + fibarr[i-2])
+            var l = fibarr.length;
+            fibarr.push(fibarr[i-2] + fibarr[i-3])
         }
         i++;
     }
+
     return fibarr;
 }
  ```
     101. Math随机数的控制.
+```javascript
+取[min,max]之间的值
+Math.floor(Math.random()*(max-min+1)+min);
+```
+[随机数](https://www.cnblogs.com/starof/p/4988516.html)
 
 
 ### 4. 前端安全(xss,csrf,jwt)常用的攻击手段,常用的加密方法.
@@ -385,7 +451,7 @@ function getFibonacci(n) {
 
 ```javascript
 分类: 
-    基本数据类型有:String,Number,Boolean,Null,Undefined,Symble.
+    基本数据类型有:String,Number,Boolean,Null,Undefined,Symbol.
     引用数据有: 
         1.第一类:原生对象,objet,Array,Function,Date,RegExp,基于基本类型还衍生出来了三个包装类型:Boolean,Number,String,每当我们读取一个基本数据类型的实例时，后台都会创建一个对应的基本包装类型，从而使我们可以使用不是对象的基本类型调用相应的方法。
         2.第二类内置对象(JS语言提供的不依赖于执行宿主的对象，如Global,Math)。
@@ -525,19 +591,101 @@ typeof Math.sin === 'function';
     浏览器的同源策略导致了跨域
     用于隔离潜在恶意文件的重要安全机制
 
-    跨域的解决方案:
+    跨域的解决方案: 
+[参考链接](https://juejin.im/post/5b5ff1dfe51d4519610e26ec)
 
-    1. jsonp、 
+```javascript
+    1. jsonp    
+    单纯地为了实现跨域请求而创造的一个 trick。【实现原理】虽然因为同源策略的影响，不能通过XMLHttpRequest请求不同域上的数据（Cross-origin reads）。但是，在页面上引入不同域上的js脚本文件却是可以的（Cross-origin embedding）。因此在js文件载入完毕之后，触发回调，可以将需要的data作为参数传入。【实现方式（需前后端配合）】
+
+    <script type="text/javascript">
+        function dosomething(data){
+            //处理获得的数据
+        }
+    </script>
+    <script src="http://example.com/data.php?callback=dosomething"></script>
+```
+```php
+    <?php
+$callback = $_GET['callback'];//得到回调函数名
+$data = array('a','b','c');//要返回的数据
+echo $callback.'('.json_encode($data).')';//输出
+?>
+【JSONP的优缺点】
+优点：兼容性好（兼容低版本IE）
+缺点：1.JSONP只支持GET请求； 2.XMLHttpRequest相对于JSONP有着更好的错误处理机制
+```
     2. document.domain+iframe、
-    3. window.name、
+[document.domain跨域](https://blog.csdn.net/super_yang_android/article/details/53992210) 
+    父子页面都添加docuemnt.domain = '父域名',然后父页面动态添加iframe  
+```javascript
+    document.domain = 'b.com';
+    var ifr = document.createElement('iframe');
+    ifr.src = 'http://a.b.com/a.b.com.html';
+    ifr.style.display = 'none';
+    document.body.appendChild(ifr);
+    ifr.onload = function(){
+        var doc = ifr.contentDocument || ifr.contentWindow.document;
+        // 这里操作DOM
+        var oUl = doc.getElementById('ul1');
+        alert(oUl.innerHTML);
+        ifr.onload = null;
+    };
+```
+    3. window.name    
+[链接](http://www.cnblogs.com/zichi/p/4620656.html)  
     4. window.postMessage、
-    5. 服务器上设置代理页面
+```javascript
+跨域页a.html页面添加iframe页面,
+<iframe src="http://localhost:9022/b.html" id="child" style="display: block; border: 1px dashed #ccc; height: 300px;"></iframe>
+
+发送消息:
+window.iframes[0].postMessage(data,'http://localhost:9022/)
+
+接受消息:
+window.addEventListener('message',function (messageEvent){
+        var data = messageEvent.data; 
+    console.info('message from child:', data);
+},false);
+
+b.html页面  
+window.addEventListener('message', function(ev) {
+    // if (ev.source !== window.parent) {return;}
+    var data = ev.data;
+    console.info('message from parent:', data);
+}, false);
+
+function send() {
+    var data = document.querySelector('#inp').value;
+    parent.postMessage(data, 'http://localhost:9011/'); // 若父页面的域名和指定的不一致，则postMessage失败
+    // parent.postMessage(data, '*'); // 触发父页面的message事件
+}
+
+```
+    5. websocket
+```javascript
+//socket.html
+let socket = new WebSocket('ws://localhost:3000');
+// 给服务器发消息
+socket.onopen = function() {
+    socket.send('hello server')
+}
+// 接收服务器回复的消息
+socket.onmessage = function(e) {
+    console.log(e.data)
+}
+
+```
     6. nginx 反向代理（nginx 服务内部配置 Access-Control-Allow-Origin *）
+
     7. cors 前后端协作设置请求头部，Access-Control-Allow-Origin 等头部信息
-    8. iframe 嵌套通讯，
+   [cors详解](https://www.cnblogs.com/keyi/p/6726089.html)
 
 ### 12. 原生,vue,react,实现懒加载和预加载.
+原生的
+[rect版本](https://segmentfault.com/a/1190000012428565)
 ### 13. this的理解,应用.
+     匿名函数的this,初始指向window
 ### 14.dom操作
 ### 15.null和undefined的区别.
     null是一个表示"无"的对象，转为数值时为0；undefined是一个表示"无"的原始值，转为数值时为NaN。
@@ -563,19 +711,67 @@ typeof Math.sin === 'function';
     1. 创建了一个新对象,并且this变量引用该对象,同时还继承了该函数的原型.
     2. 属性和方法被加到this引用的对象中.
     3. 新创建的对象有this所引用,并且最后隐式的返回this.
+
+    1.创建一个空对象 obj;
+    2.将新创建的空对象的隐式原型指向其构造函数的显示原型。
+    3.使用 call 改变 this 的指向
+    4.如果无返回值或者返回一个非对象值，则将 obj 返回作为新对象；如果返回值是一个新对象的话那么直接直接返回该对象。
+
+    所以我们可以看到，在 new 的过程中，我们是使用 call 改变了 this 的指向。
+
 ```javascript
 var obj = {};
 obj.__proto__ = Base.prototype;
 Base.call(obj);
+
+var a = new myFunction("Li","Cherry");
+
+new myFunction{
+    var obj = {};
+    obj.__proto__ = myFunction.prototype;
+    var result = myFunction.call(obj,"Li","Cherry");
+    return typeof result === 'obj'? result : obj;
+}
+
 ```
 
 ### 17.JavaScript中的作用域与变量声明提升？
 ### 18.WEB应用从服务器主动推送Data到客户端有那些方式？
     Commet：基于HTTP长连接的服务器推送技术
+[xhr长轮讯](https://www.cnblogs.com/zengqinglei/archive/2013/03/31/2991189.html)
 
-    基于WebSocket的推送方案
+    基于WebSocket的推送方案  
+[连接](https://www.cnblogs.com/jingmoxukong/p/7755643.html)
+```javascript
+  // 初始化一个 WebSocket 对象
+var ws = new WebSocket("ws://localhost:9998/echo");
+
+// 建立 web socket 连接成功触发事件
+ws.onopen = function () {
+  // 使用 send() 方法发送数据
+  ws.send("发送数据");
+  alert("数据发送中...");
+};
+
+// 接收服务端数据时触发事件
+ws.onmessage = function (evt) {
+  var received_msg = evt.data;
+  alert("数据已接收...");
+};
+
+// 断开 web socket 连接成功触发事件
+ws.onclose = function () {
+  alert("连接已关闭...");
+};
+```
 
     SSE（Server-Send Event）：服务器推送数据新方式
+```javascript
+var sse = new EventSource("./php");
+sse.addEventListener("message",function(e) {
+    var data = JSON.parse(e.data);
+})
+```
 
 
 ### 19.一个页面从输入 URL 到页面加载显示完成，这个过程中都发生了什么？
@@ -603,7 +799,10 @@ Base.call(obj);
         5. 释放 TCP连接;
         6. 浏览器将该 html 文本并显示内容; 
 ### 20.网站重构的理解？ 
+
 ### 21.js操作获取和设置cookie
+
+
 ### 22.window.requestAnimationFrame(),window.cancelAnimationFrame()
 >window.requestAnimationFrame() 将告知浏览器你马上要开始动画效果了，后者需要在下次动画前调用相应方法来更新画面。这个方法就是传递给window.requestAnimationFrame()的回调函数。
 
@@ -614,13 +813,17 @@ Base.call(obj);
 requestAnimationFrame(callback)//callback为回调函数
 ```
 ### 23.call与apply的区别
+
 ### 24浏览器缓存，跨域，从输入url到渲染的整个过程，事件(W3C和IE)，TCP三次握手过程，如何实现懒加载(跟预加载的区别)
 
 ### 24. 移动页面适配问题.之前有看过你做的一个移动页简历，请问如何实现？我主要是使用REM+Media Query，根据不同尺寸的设备进行不同的font-size设置。然后问我REM和EM的区别，如果父元素的font-size也是采用em表示，那么子元素的font-size怎么计算等。
 
 ### 25.怎么理解JS模块化？有没有使用过webpack？
+
 ### 26.JS手写二分搜索算法
+
 ### 27.SSL握手时有对称加密和非对称加密吗
+
 ### 28.js实现对树深度优先遍历与广度优先遍历
 参考链接  https://blog.csdn.net/github_38861674/article/details/77937691?locationNum=3&fps=1
 ### 29.原生DOM操作
@@ -669,6 +872,47 @@ let arr2 = [].slice.call(arrayLike);
 let arr3 = Array.from(arrayLike);
 ```
 
+### 35 函数节流,函数防抖   
+[函数防抖,节流](https://www.cnblogs.com/walls/p/6399837.html)   
+
+    函数节流是指一定时间内js方法只跑一次。比如人的眨眼睛，就是一定时间内眨一次。这是函数节流最形象的解释。    
+```javascript
+// 函数节流
+var canRun = true;
+document.getElementById("throttle").onscroll = function(){
+    if(!canRun){
+        // 判断是否已空闲，如果在执行中，则直接return
+        return;
+    }
+
+    canRun = false;
+    setTimeout(function(){
+        console.log("函数节流");
+        canRun = true;
+    }, 300);
+};
+```
+
+    函数防抖是指频繁触发的情况下，只有足够的空闲时间，才执行代码一次。比如生活中的坐公交，就是一定时间内，如果有人陆续刷卡上车，司机就不会开车。只有别人没刷卡了，司机才开车。
+```javascript
+// 函数防抖
+var timer = false;
+document.getElementById("debounce").onscroll = function(){
+    clearTimeout(timer); // 清除未执行的代码，重置回初始化状态
+
+    timer = setTimeout(function(){
+        console.log("函数防抖");
+    }, 300);
+};
+```
+
+### 36.React、React-Router、Redux、Vue的大致的实现原理，然后比较了下Vue和React的性能的优势和劣势。  
+
+[Vue和React的性能的优势和劣势](https://blog.csdn.net/tiangongkaiwu152368/article/details/81132884)  
+[vue-router的实现原理](https://segmentfault.com/a/1190000015123061)
+一面很快，也就是十几分钟，最后和面试官聊了下RxJS拖了些时间。  
+
+
 
 参考链接  
 [题目](https://juejin.im/entry/585ba05d128fe1006ddc956e)
@@ -678,15 +922,73 @@ let arr3 = Array.from(arrayLike);
 ## css
 ---
 ### 1. 元素垂直居中的方法
+[链接](https://juejin.im/post/58f818bbb123db006233ab2a)
 ### 2. 1px问题的解决方案
+[方案](https://juejin.im/post/58fde1835c497d005808d421)
 ### 3. 经典的布局方法(圣杯,双飞燕,左边固定,右边自适应)
-### 4. 对BFC规范的理解？
-BFC，块级格式化上下文，一个创建了新的BFC的盒子是独立布局的，盒子里面的子元素的样式不会影响到外面的元素。在同一个BFC中的两个毗邻的块级盒在垂直方向（和布局方向有关系）的margin会发生折叠。W3C CSS 2.1 规范中的一个概念，它决定了元素如何对其内容进行布局，以及与其他元素的关系和相互作用。）
+[布局](https://juejin.im/post/599970f4518825243a78b9d5)
+### 4. 对BFC规范的理解？  
+[BFC](https://blog.csdn.net/xuehangongzi/article/details/80713854)  
+
+    BFC，块级格式化上下文，一个创建了新的BFC的盒子是独立布局的，盒子里面的子元素的样式不会影响到外面的元素。在同一个BFC中的两个毗邻的块级盒在垂直方向（和布局方向有关系）的margin会发生折叠。W3C CSS 2.1 规范中的一个概念，它决定了元素如何对其内容进行布局，以及与其他元素的关系和相互作用。）  
+
+    2.BFC 的原理/BFC的布局规则
+    BFC 的原理，其实也就是 BFC 的渲染规则。包括：
+
+    （1）BFC 内部的子元素，在垂直方向，边距会发生重叠,就是间距采用margin值大地那个，而不是叠加在一起
+
+    （2）BFC在页面中是独立的容器，外面的元素不会影响里面的元素，反之亦然。
+
+    （3）BFC区域不与旁边的float box区域重叠。（可以用来清除浮动带来的影响）。 
+    （4）计算BFC的高度时，浮动的子元素也参与计算。  
+
+
+    3.如何生成BFC
+    有以下几种方法：
+
+    方法1：overflow: 不为vidible，可以让属性是 hidden、auto
+
+    方法2：浮动中：float的属性值不为none。意思是，只要设置了浮动，当前元素就创建了BFC。
+
+    方法3：定位中：只要posiiton的值不是 static或者是relative即可，可以是absolute或fixed，也就生成了一个BFC。
+
+    方法4：display为inline-block, table-cell, table-caption, flex, inline-flex
+
+    BFC 原理解释说明
+
+    (1)解决 margin 重叠
+    当父元素和子元素发生 margin 重叠时，解决办法：给子元素或父元素创建BFC。
+
+    上文提到的一条规则：与浮动元素相邻的已生成BFC的元素不能与浮动元素相互覆盖。利用该特性可以作为多栏布局的一种实现方式。
+```css
+    html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
+    .left{
+      background:pink;
+      float: left;
+      width:180px;
+    }
+    .center{
+      background:lightyellow;
+      overflow:hidden;
+      
+    }
+    .right{
+      background: lightblue;
+      width:180px;
+      float:right;
+    }
+```
+
+
 
 5. css3的新特性
+ 
 6. 伪类和伪元素
+
 7. 盒模型
+
 8. flex
+
 ### 7.解释下浮动和它的工作原理？
 
 浮动元素脱离文档流，不占据空间。浮动元素碰到包含它的边框或者浮动元素的边框停留
@@ -712,6 +1014,8 @@ BFC，块级格式化上下文，一个创建了新的BFC的盒子是独立布�
    .clearfix{display: inline-block;} /* for IE/Mac */
    ```
    4. 浮动外部元素
+   5. BFC  
+
 
 ### 11. 解释下 CSS sprites，以及你要如何在页面或网站中使用它。
 
@@ -768,6 +1072,8 @@ BFC，块级格式化上下文，一个创建了新的BFC的盒子是独立布�
     Object.defineProperty()
 [代码参考](https://www.cnblogs.com/libin-1/p/6893712.html)
 
+## 3.深入Vue2.x的虚拟DOM diff原理
+[vdom实现](https://blog.csdn.net/m6i37jk/article/details/78140159)
 ## 一般面试问题
 ---
 ### 1.你遇到过比较难的技术问题是？你是如何解决的？
@@ -783,3 +1089,5 @@ BFC，块级格式化上下文，一个创建了新的BFC的盒子是独立布�
 5. [前端面试题大全](https://juejin.im/entry/56f06612731956005d3b6795)
 6. [面试流程](https://juejin.im/entry/584522c0a22b9d007a9f90e0)
 7. [问题参考-契合度5星](https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers)
+8. [阿里面试](https://blog.ihoey.com/posts/Interview/2018-02-28-alibaba-interview.html)  
+9. [前端知识综合优秀](https://juejin.im/post/5aae076d6fb9a028cc6100a9)
