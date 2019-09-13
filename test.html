@@ -40,6 +40,16 @@
     .right div p {
       background: green;
     }
+
+    .red {
+      color:
+        red;
+    }
+
+    .blue {
+      color:
+        blue;
+    }
   </style>
 </head>
 
@@ -54,45 +64,286 @@
       </div>
     </div>
   </div>
-
+  <div class="red blue">
+    这是什么颜色
+  </div>
+  <div class="blue red">
+    这是什么颜色
+  </div>
   <script>
-    //原生ajax
-    var xhr = new XMLHttpRequest();
-    xhr.open("方式", "地址", "是否异步")
-    xhr.send();
+    // var encoded = `“I‏‍‏‌‏‎‍​‏‏‌‏‌‏﻿​‏‌‌‌‍‎‍​‏‏﻿‏﻿‎‎​‏‏‌‏‌﻿‏​‌‎‏﻿‏‍‍​‏‏﻿‎‎‎‍​‌‎‌​‏﻿‍​‏﻿‍​‌‏‎​‌‏‎​‌‎﻿​‏﻿﻿​‌‎‌t’s not who I
+    // am underneath, but what I do that defines me.” -Bruce Wayne`;
+    // const split = encoded.split('​');
 
-    beforeCreate;
-    create;
-    beforeMount;
-    mounted;
-    beforeUpdate;
-    update;
-    beforeDestroy;
-    destroyed;
-    var xhr = null;
-    xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://www.baidu.com", false);
-    xhr.send();
-    xhr.onReadyStateChange(function () {
-      if (xhr.readyState === 4) {
-        success(xhr.responseText);
-      } else {
-        fial && fail(xhr.status)
-      }
-    })
+    // // 将文本转回成二进制数组
+    // const binary = split.map(c => Array.from(c).map(z => z === '‍' ? '1' : '0').join(''));
 
-    const unique = function (arr) {
-      var obj = {};
-      var temp = [];
-      for (var i = 0; i < arr.length; i++) {
-        if (!obj[arr[i]]) {
-          obj[arr[i]] = 1;
-          temp.push(arr[i]);
+    // // 此时binary中的值再次回到开始的 ["110001", "110010", "110011", "11111011000000000"]
+
+    // // 最后一部只需要将二进制文本转回十进制，再使用 String.fromCodePoint 就可以得到原文本了
+    // const decoded = binary.map(b => String.fromCodePoint(parseInt(b, 2))).join('');
+
+    // console.log(decoded)
+
+    const PENDDING = 'pendding';
+    const FULFILLED = 'fulfilled';
+    const REJECTED = 'rejected';
+
+    function MyPromise(fn) {
+      let self = this; //缓存当前的promise实例
+      self.value = null; //成功时的值
+      self.error = null; //失败时的值
+      self.status = PENDDING;
+      self.onFulfilled = null; //成功的回调函数
+      self.onRejected = null; //失败时候的回调函数
+      self.onFulfilledCallbacks = [];
+      self.onRejectedCallbacks = [];
+
+      function resolve(value) {
+        if (self.status === PENDDING) {
+          //利用setTimeout的特性把具体的执行放到then之后
+          setTimeout(() => {
+            self.value = value;
+            self.status = FULFILLED;
+            // self.onFulfilled(self.value); //resolve时执行成功的回调
+            self.onFulfilledCallbacks.forEach(callback => {
+              callback(self.value)
+            });
+          });
         }
       }
-      return obj;
+
+      function reject(error) {
+        if (self.status === PENDDING) {
+          setTimeout(() => {
+            self.error = error;
+            self.status = REJECTED;
+            // self.onRejected(self.error) //reject时执行失败的回调
+            self.onRejectedCallbacks.forEach(callback => {
+              callback(self.value)
+            });
+
+          });
+        }
+      }
+      fn(resolve, reject)
+    }
+    MyPromise.prototype.catch = function (onRejected) {
+      return this.then(null, onRejected)
+    }
+    //用来解析回调函数的返回值x,x既可能普通值也可能是promise
+    function resolvePromise(bridgePromise, x, resolve, reject) {
+      //如果x是promise
+      if (x instanceof MyPromise) {
+        //如果这个promise的状态是pendding,就在它的then方法里继续执行resolvePromise解析它的结果,直到返回值不是一个pendding状态的promise为止.
+        if (x.status === PENDDING) {
+          x.then(y => {
+            resolvePromise(bridgePromise, y, resolve, reject)
+          }, error => {
+            reject(error)
+          })
+        } else {
+          x.then(resolve, reject)
+        }
+        // 如果x是一个普通值,就让bridgePromise的状态改为fulfilled,并且把这个值传递下去
+      } else {
+        resolve(x)
+      }
 
     }
+    MyPromise.prototype.then = function (onFulfilled, onRejected) {
+      const self = this;
+      let bridgePromise;
+      //为了防止不传递成功或失败回调函数,给他们设定默认函数
+      onFulfilled = typeof onFulfilled === "function" ? onFulfilled : value => value;
+      onRejected = typeof onRejected === "function" ? onRejected : error => error;
+      if (self.status === PENDDING) {
+        //在这里给proimses实例注册成功和失败的回调
+        // this.onFulfilled = onFulfilled;
+        // this.onRejected = onRejected;
+        // this.onFulfilledCallbacks.push(onFulfilled);
+        // this.onRejectedCallbacks.push(onRejected);
+        return bridgePromise = new MyPromise((resolve, reject) => {
+          self.onFulfilledCallbacks.push((value) => {
+            try {
+              let x = onFulfilled(value)
+              resolvePromise(bridgePromise, x, resolve, reject)
+            } catch (e) {
+              reject(e)
+            }
+          })
+          self.onRejectedCallbacks.push((error) => {
+            try {
+              let x = onRejected(error)
+              resolvePromise(bridgePromise, x, resolve, reject)
+            } catch (e) {
+              reject(e)
+            }
+          })
+        })
+      }
+      if (self.status === FULFILLED) {
+        //如果状态是fulfilled,直接执行成功的回调,并将成功值传入
+        // onFulfilled(this.value)
+        return bridgePromise = new MyPromise((resolve, reject) => {
+          setTimeout(() => {
+            try {
+              let x = onFulfilled(self.value);
+              resolvePromise(bridgePromise, x, resolve, reject)
+            } catch (e) {
+              reject(e)
+            }
+          });
+        })
+      }
+      if (self.status = REJECTED) {
+        return bridgePromise = new MyPromise((resolve, reject) => {
+          setTimeout(() => {
+            try {
+              let x = onRejected(self.error);
+              resolvePromise(bridgePromise, x, resolve, reject)
+            } catch (e) {
+              reject(e)
+            }
+          });
+        })
+      }
+      return this;
+    }
+
+    let promise = new MyPromise((resolve, reject) => {
+      resolve('同步任务执行')
+    })
+    promise.then(data => {
+      setTimeout(() => {
+        console.log(data + 1)
+      }, 2000);
+    }).then(data => {
+      console.log(data + 2)
+    }).then(data => {
+      console.log(data + 3)
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function moveZeroToLast(arr) {
+      let index = 0;
+      for (let i = 0, length = arr.length; i < length; i++) {
+        if (arr[i] === 0) {
+          index++;
+        } else if (index !== 0) {
+          arr[i - index] = arr[i];
+          arr[i] = 0;
+        }
+      }
+      return arr;
+    }
+
+
+
+    console.log(moveZeroToLast([0, 10, 2, 0, 0, 3, 4, 0, 5]))
+
+    // 实现一个add方法，使计算结果能够满足如下预期：
+    // add(1)(2)(3) = 6;
+    // add(1, 2, 3)(4) = 10;
+    // add(1)(2)(3)(4)(5) = 15;
+
+    function add() {
+      // 第一次执行时，定义一个数组专门用来存储所有的参数
+      var _args = Array.prototype.slice.call(arguments);
+
+      // 在内部声明一个函数，利用闭包的特性保存_args并收集所有的参数值
+      var _adder = function () {
+        _args.push(...arguments);
+        return _adder;
+      };
+
+      // 利用toString隐式转换的特性，当最后执行时隐式转换，并计算最终的值返回
+      _adder.toString = function () {
+        return _args.reduce(function (a, b) {
+          return a + b;
+        });
+      }
+      return _adder;
+    }
+
+    add(1)(2)(3) // 6
+    add(1, 2, 3)(4) // 10
+    add(1)(2)(3)(4)(5) // 15
+    add(2, 6)(1) // 9
+
+
+
+
+
+
+
+
+    // //原生ajax
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("方式", "地址", "是否异步")
+    // xhr.send();
+
+    // beforeCreate;
+    // create;
+    // beforeMount;
+    // mounted;
+    // beforeUpdate;
+    // update;
+    // beforeDestroy;
+    // destroyed;
+    // var xhr = null;
+    // xhr = new XMLHttpRequest();
+    // xhr.open("GET", "http://www.baidu.com", false);
+    // xhr.send();
+    // xhr.onReadyStateChange(function () {
+    //   if (xhr.readyState === 4) {
+    //     success(xhr.responseText);
+    //   } else {
+    //     fial && fail(xhr.status)
+    //   }
+    // })
+
+    // const unique = function (arr) {
+    //   var obj = {};
+    //   var temp = [];
+    //   for (var i = 0; i < arr.length; i++) {
+    //     if (!obj[arr[i]]) {
+    //       obj[arr[i]] = 1;
+    //       temp.push(arr[i]);
+    //     }
+    //   }
+    //   return obj;
+
+    // }
   </script>
 </body>
 

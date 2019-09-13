@@ -1,16 +1,16 @@
 # 重点
 
-## js
+### js
 ---
-### 1. http的相关问题
+### 1. http的相关问题   
  1. https与http有什么区别和联系?  
     [https与http的区别和联系,以及加密的原理,过程,https的优缺点](https://blog.csdn.net/xionghuixionghui/article/details/68569282)  
-    [HTTPS握手](https://blog.csdn.net/hherima/article/details/52469674)
+    [HTTPS握手](https://blog.csdn.net/hherima/article/details/52469674)  
+    [https握手证书验证](https://blog.csdn.net/sunansheng/article/details/78581468)
 
- 2. http1.0, http1.1, http2.0的区别?  
-    [参考](https://www.cnblogs.com/heluan/p/8620312.html)  
+ 2. http1.0, http1.1, http2.0的区别?     
+    [参考](https://www.cnblogs.com/heluan/p/8620312.html)   
     [http2.0的优劣](https://blog.csdn.net/u012657197/article/details/77877840)  
-    [http2.0](https://blog.csdn.net/u012657197/article/details/77877840)
 
  3. *http常见的状态码?*  
    	简单版  
@@ -131,14 +131,15 @@
 [http传输过程超详解](https://www.cnblogs.com/kongxy/p/4615226.html) 
 
         页面渲染过程    
-    [页面渲染](https://www.cnblogs.com/dojo-lzz/p/3983335.html)  
-        现代浏览器渲染页面的过程是这样的：jiexiHTML以构建DOM树 –> 构建渲染树 –> 布局渲染树 –> 绘制渲染树。
+    [页面渲染参考](https://www.cnblogs.com/dojo-lzz/p/3983335.html)   
+    [页面渲染参考 更好](https://www.cnblogs.com/CandyManPing/p/6635008.html)   
+        现代浏览器渲染页面的过程是这样的：解析HTML以构建DOM树 –> 构建渲染树 –> 布局渲染树 –> 绘制渲染树。
 
         DOM树是由HTML文件中的标签排列组成，渲染树是在DOM树中加入CSS或HTML中的style样式而形成。渲染树只包含需要显示在页面中的DOM元素，像<head>元素或display属性值为none的元素都不在渲染树中。
 
         在浏览器还没接收到完整的HTML文件时，它就开始渲染页面了，在遇到外部链入的脚本标签或样式标签或图片时，会再次发送HTTP请求重复上述的步骤。在收到CSS文件后会对已经渲染的页面重新渲染，加入它们应有的样式，图片文件加载完立刻显示在相应位置。在这一过程中可能会触发页面的重绘或重排。
 
-        重绘或重排。 [连接](https://blog.csdn.net/qq_20544669/article/details/80494475)  
+    重绘或重排。    [连接](https://blog.csdn.net/qq_20544669/article/details/80494475)  
             当DOM的变化影响了元素的几何属性（宽和高）——比如改变边框宽度或给段落增加文字，导致行数增加——浏览器需要重新计算元素的集合属性，同样其他元素的集合属性和位置也会受到影响。浏览器会使渲染树中受到影响的部分失效，并重新构造渲染树。这个过程称为“重排”。完成重排后，浏览器会重新绘制受影响的部分到屏幕中，该过程称为“重绘”（比如改变一个元素的背景色并不影响几何属性）。  
 
             重排：当页面布局和几何属性改变时就需要“重排”。下述情况会发生重排：
@@ -174,8 +175,44 @@
  5. 认识http的基本信息.  
  [重点参考链接,](http://www.cnblogs.com/ranyonsue/p/5984001.html)  
  [http详解搜索百度](https://blog.csdn.net/u013219814/article/details/56290792)  
- 6. http的七层协议
- [http的七层协议](https://blog.csdn.net/a5582ddff/article/details/77731537)
+ 6. OSI，TCP/IP，五层协议的体系结构，以及各层协议   
+ [http的七层协议](https://blog.csdn.net/a5582ddff/article/details/77731537)  
+
+        OSI七层网络协议  
+            倒数 物理层->数据链路层->网络层->传输层->会话层->表示层->应用层  
+        TCP/IP分层  
+            （4层）：网络接口层、 网际层、运输层、 应用层。  
+            五层协议 （5层）：物理层、数据链路层、网络层、运输层、 应用层。  
+        每一层的协议如下：  
+
+            物理层：RJ45、CLOCK、IEEE802.3 （中继器，集线器）
+
+            数据链路：PPP、FR、HDLC、VLAN、MAC （网桥，交换机）
+
+            网络层：IP、ICMP、ARP、RARP、OSPF、IPX、RIP、IGRP、 （路由器）
+
+            传输层：TCP、UDP、SPX
+
+            会话层：NFS、SQL、NETBIOS、RPC
+
+            表示层：JPEG、MPEG、ASII
+
+            应用层：FTP、DNS、Telnet、SMTP、HTTP、WWW、NFS  
+        每一层的作用如下:  
+            物理层：通过媒介传输比特,确定机械及电气规范（比特Bit）
+
+            数据链路层：将比特组装成帧和点到点的传递（帧Frame）
+
+            网络层：负责数据包从源到宿的传递和网际互连（包PackeT）
+
+            传输层：提供端到端的可靠报文传递和错误恢复（段Segment）
+
+            会话层：建立、管理和终止会话（会话协议数据单元SPDU）
+
+            表示层：对数据进行翻译、加密和压缩（表示协议数据单元PPDU）
+
+            应用层：允许访问OSI环境的手段（应用协议数据单元APDU）
+
 
 ### 1.加密算法-对称加密,非对称加密,创建的用户密码加密措施.
 [对称加密,非对称加密](http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html)
@@ -195,6 +232,7 @@
         http缓存强制缓存,对比缓存.
     8. css文件放在头部,js文件放在body结束标签前(每个问题都需要再问一个为什么?,联系浏览器加载顺序,可接 从一个url输入到浏览器到页面出现都发生了什么?)  
     9.懒加载
+    10,函数节流,函数防抖
 ### 2. 数组的相关操作(去重,排序,删除单个元素,最大值,最小值,为维数组变一维) 
 
     1.找出下列正数组的最大差值:
@@ -360,7 +398,7 @@ Math.floor(Math.random()*(max-min+1)+min);
 
 
 ### 5. 异步同步问题(promise async await)
-    [js单线程,同步,异步的由来](https://www.cnblogs.com/c3gen/p/6170504.html)
+[js单线程,同步,异步的由来](https://www.cnblogs.com/c3gen/p/6170504.html)
 ### 6. 闭包的实现
 
 使用闭包主要是为了设计私有的方法和变量。闭包的优点是可以避免全局变量的污染，缺点是闭包会常驻内存，会增大内存使用量，使用不当很容易造成内存泄露。   
@@ -583,8 +621,10 @@ typeof Math.sin === 'function';
                 }
                 return tempObj;
             }
-        3.Object.create()
+        3.Object.create()   
+
 ```
+[理解对象Obejct的方法 深入理解](https://www.cnblogs.com/leijee/p/7490822.html)        
 
 
 ### 11. 原生ajax,ajax的优缺点,跨越,跨域的解决方案.
@@ -912,9 +952,104 @@ document.getElementById("debounce").onscroll = function(){
 [vue-router的实现原理](https://segmentfault.com/a/1190000015123061)
 一面很快，也就是十几分钟，最后和面试官聊了下RxJS拖了些时间。  
 
+### 37. es6的新特性
+    1. let,const块级作用域
+    2. 字符串,模板字符串 
+    3. 函数
+        3.1 函数默认参数
+        3.2 箭头函数
+            .不需要 function 关键字来创建函数
+            .省略 return 关键字
+            .继承当前上下文的 this 关键字
+            .当你的函数有且仅有一个参数的时候，是可以省略掉括号的。当你函数返回有且仅有一个表达式的时候可以省略{} 和 return；例如: 
+            var people = name => 'hello' + name
+
+            等同于  
+                var people = (name, age) => {
+                    const fullName = 'hello' + name
+                    return fullName
+                } 
+    4. 扩展的对象功能  
+        4.1 键值同名的简写   
+        4.2 
+    5. 数组对象的结构赋值  
+    6. Spread Operator 展开运算符  
+        //数组
+        const color = ['red', 'yellow']
+        const colorful = [...color, 'green', 'pink']
+        console.log(colorful) //[red, yellow, green, pink]
+        
+        //对象
+        const alp = { fist: 'a', second: 'b'}
+        const alphabets = { ...alp, third: 'c' }
+        console.log(alphabets) //{ "fist": "a", "second": "b", "third": "c"
+        }  
+```JavaScript
+    7.import 和 export  
+
+        //全部导入
+    import people from './example'
+
+    //有一种特殊情况，即允许你将整个模块当作单一对象进行导入
+    //该模块的所有导出都会作为对象的属性存在
+    import * as example from "./example.js"
+    console.log(example.name)
+    console.log(example.age)
+    console.log(example.getName())
+
+    //导入部分
+    import {name, age} from './example'
+
+    // 导出默认, 有且只有一个默认
+    export default App
+
+    // 部分导出
+    export class App extend Component {};  
+
+    1.当用export default people导出时，就用 import people 导入（不带大括号）
+
+    2.一个文件里，有且只能有一个export default。但可以有多个export。
+
+    3.当用export name 时，就用import { name }导入（记得带上大括号）
+
+    4.当一个文件里，既有一个export default people, 又有多个export name 或者 export age时，导入就用 import people, { name, age } 
+
+    5.当一个文件里出现n多个 export 导出很多模块，导入时除了一个一个导入，也可以用import * as exampl
+
+```
+    8. Promise  
+
+[经典题目](https://zhuanlan.zhihu.com/p/25407758)  
+```javascript
+setTimeout(function() {
+      console.log(1)
+    }, 0);
+    new Promise(function executor(resolve) {
+      console.log(2);
+      for( var i=0 ; i<10000 ; i++ ) {
+        i == 9999 && resolve();
+      }
+      console.log(3);
+    }).then(function() {
+      console.log(4);
+    });
+    console.log(5);
+        //2,3,5,4,1
+
+    9.promise的简单实现  
+    
+```  
 
 
-参考链接  
+### 38.https加密详解   
+[链接](https://www.cnblogs.com/zxj015/p/6530766.html)
+
+
+### 39.js常用设计模式  
+[链接](https://www.cnblogs.com/xianyulaodi/p/5827821.html)
+
+
+### 参考链接  
 [题目](https://juejin.im/entry/585ba05d128fe1006ddc956e)
 
 
@@ -988,6 +1123,8 @@ document.getElementById("debounce").onscroll = function(){
 7. 盒模型
 
 8. flex
+9. html5新特性 
+[新特性MDN](https://developer.mozilla.org/zh-CN/docs/Web/Guide/HTML/HTML5)
 
 ### 7.解释下浮动和它的工作原理？
 
@@ -1068,16 +1205,23 @@ document.getElementById("debounce").onscroll = function(){
 2. angular 会将 UI 事件，请求事件，settimeout 这类延迟，的对象放入到事件监测的脏队列，当数据变化的时候，触发 $diget 方法进行数据的更新，视图的渲染  
 3. vue 通过数据属性的数据劫持和发布订阅的模式实现，大致可以理解成由3个模块组成，observer 完成对数据的劫持，compile 完成对模板片段的渲染，watcher 作为桥梁连接二者，订阅数据变化及更新视图
 
-## 2. vue双向绑定的代码实现
+## 2. vue双向绑定的代码实现  
     Object.defineProperty()
 [代码参考](https://www.cnblogs.com/libin-1/p/6893712.html)
 
-## 3.深入Vue2.x的虚拟DOM diff原理
-[vdom实现](https://blog.csdn.net/m6i37jk/article/details/78140159)
+## 3.深入Vue2.x的虚拟DOM diff原理  
+[vdom实现](https://blog.csdn.net/m6i37jk/article/details/78140159)  
+## 4. vue一般概念面试题  
+[vue一般概念面试题](https://blog.csdn.net/zxy9602/article/details/79642877)  
+
+## 5. vue ssr(服务端渲染)
+
+[vue ssr](https://segmentfault.com/a/1190000015964813)
+
 ## 一般面试问题
 ---
-### 1.你遇到过比较难的技术问题是？你是如何解决的？
-### 2.对前端界面工程师这个职位是怎么样理解的？它的前景会怎么样？
+### 1.你遇到过比较难的技术问题是？你是如何解决的？  
+### 2.对前端界面工程师这个职位是怎么样理解的？它的前景会怎么样？  
 
 
 ## 经典参考链接
