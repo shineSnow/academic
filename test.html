@@ -85,167 +85,157 @@
 
     // console.log(decoded)
 
-    const PENDDING = 'pendding';
-    const FULFILLED = 'fulfilled';
-    const REJECTED = 'rejected';
+
+    const PENDING = "pending";
+    const FULFILLED = "fulfilled";
+    const REJECTED = "rejected";
 
     function MyPromise(fn) {
-      let self = this; //缓存当前的promise实例
-      self.value = null; //成功时的值
-      self.error = null; //失败时的值
-      self.status = PENDDING;
-      self.onFulfilled = null; //成功的回调函数
-      self.onRejected = null; //失败时候的回调函数
+      const self = this;
+      self.value = null;
+      self.error = null;
+      self.status = PENDING;
       self.onFulfilledCallbacks = [];
       self.onRejectedCallbacks = [];
 
       function resolve(value) {
-        if (self.status === PENDDING) {
-          //利用setTimeout的特性把具体的执行放到then之后
+        if (value instanceof MyPromise) {
+          return value.then(resolve, reject);
+        }
+        if (self.status === PENDING) {
           setTimeout(() => {
-            self.value = value;
             self.status = FULFILLED;
-            // self.onFulfilled(self.value); //resolve时执行成功的回调
-            self.onFulfilledCallbacks.forEach(callback => {
-              callback(self.value)
-            });
-          });
+            self.value = value;
+            self.onFulfilledCallbacks.forEach((callback) => callback(self.value));
+          }, 0)
         }
       }
 
       function reject(error) {
-        if (self.status === PENDDING) {
-          setTimeout(() => {
-            self.error = error;
+        if (self.status === PENDING) {
+          setTimeout(function () {
             self.status = REJECTED;
-            // self.onRejected(self.error) //reject时执行失败的回调
-            self.onRejectedCallbacks.forEach(callback => {
-              callback(self.value)
-            });
-
-          });
+            self.error = error;
+            self.onRejectedCallbacks.forEach((callback) => callback(self.error));
+          }, 0)
         }
       }
-      fn(resolve, reject)
+      try {
+        fn(resolve, reject);
+      } catch (e) {
+        reject(e);
+      }
     }
-    MyPromise.prototype.catch = function (onRejected) {
-      return this.then(null, onRejected)
-    }
-    //用来解析回调函数的返回值x,x既可能普通值也可能是promise
-    function resolvePromise(bridgePromise, x, resolve, reject) {
-      //如果x是promise
+
+    function resolvePromise(bridgepromise, x, resolve, reject) {
+      if (bridgepromise === x) {
+        return reject(new TypeError('Circular reference'));
+      }
+
+      let called = false;
       if (x instanceof MyPromise) {
-        //如果这个promise的状态是pendding,就在它的then方法里继续执行resolvePromise解析它的结果,直到返回值不是一个pendding状态的promise为止.
-        if (x.status === PENDDING) {
+        if (x.status === PENDING) {
           x.then(y => {
-            resolvePromise(bridgePromise, y, resolve, reject)
+            resolvePromise(bridgepromise, y, resolve, reject);
           }, error => {
-            reject(error)
-          })
+            reject(error);
+          });
         } else {
-          x.then(resolve, reject)
+          x.then(resolve, reject);
         }
-        // 如果x是一个普通值,就让bridgePromise的状态改为fulfilled,并且把这个值传递下去
+      } else if (x != null && ((typeof x === 'object') || (typeof x === 'function'))) {
+        try {
+          let then = x.then;
+          if (typeof then === 'function') {
+            then.call(x, y => {
+              if (called) return;
+              called = true;
+              resolvePromise(bridgepromise, y, resolve, reject);
+            }, error => {
+              if (called) return;
+              called = true;
+              reject(error);
+            })
+          } else {
+            resolve(x);
+          }
+        } catch (e) {
+          if (called) return;
+          called = true;
+          reject(e);
+        }
       } else {
-        resolve(x)
+        resolve(x);
       }
-
     }
+
     MyPromise.prototype.then = function (onFulfilled, onRejected) {
       const self = this;
       let bridgePromise;
-      //为了防止不传递成功或失败回调函数,给他们设定默认函数
       onFulfilled = typeof onFulfilled === "function" ? onFulfilled : value => value;
-      onRejected = typeof onRejected === "function" ? onRejected : error => error;
-      if (self.status === PENDDING) {
-        //在这里给proimses实例注册成功和失败的回调
-        // this.onFulfilled = onFulfilled;
-        // this.onRejected = onRejected;
-        // this.onFulfilledCallbacks.push(onFulfilled);
-        // this.onRejectedCallbacks.push(onRejected);
-        return bridgePromise = new MyPromise((resolve, reject) => {
-          self.onFulfilledCallbacks.push((value) => {
-            try {
-              let x = onFulfilled(value)
-              resolvePromise(bridgePromise, x, resolve, reject)
-            } catch (e) {
-              reject(e)
-            }
-          })
-          self.onRejectedCallbacks.push((error) => {
-            try {
-              let x = onRejected(error)
-              resolvePromise(bridgePromise, x, resolve, reject)
-            } catch (e) {
-              reject(e)
-            }
-          })
-        })
-      }
+      onRejected = typeof onRejected === "function" ? onRejected : error => {
+        throw error
+      };
       if (self.status === FULFILLED) {
-        //如果状态是fulfilled,直接执行成功的回调,并将成功值传入
-        // onFulfilled(this.value)
         return bridgePromise = new MyPromise((resolve, reject) => {
           setTimeout(() => {
             try {
               let x = onFulfilled(self.value);
-              resolvePromise(bridgePromise, x, resolve, reject)
+              resolvePromise(bridgePromise, x, resolve, reject);
             } catch (e) {
-              reject(e)
+              reject(e);
             }
-          });
+          }, 0);
         })
       }
-      if (self.status = REJECTED) {
+      if (self.status === REJECTED) {
         return bridgePromise = new MyPromise((resolve, reject) => {
           setTimeout(() => {
             try {
               let x = onRejected(self.error);
-              resolvePromise(bridgePromise, x, resolve, reject)
+              resolvePromise(bridgePromise, x, resolve, reject);
             } catch (e) {
-              reject(e)
+              reject(e);
+            }
+          }, 0);
+        });
+      }
+      if (self.status === PENDING) {
+        return bridgePromise = new MyPromise((resolve, reject) => {
+          self.onFulfilledCallbacks.push((value) => {
+            try {
+              let x = onFulfilled(value);
+              resolvePromise(bridgePromise, x, resolve, reject);
+            } catch (e) {
+              reject(e);
             }
           });
-        })
+          self.onRejectedCallbacks.push((error) => {
+            try {
+              let x = onRejected(error);
+              resolvePromise(bridgePromise, x, resolve, reject);
+            } catch (e) {
+              reject(e);
+            }
+          });
+        });
       }
-      return this;
+    }
+    MyPromise.prototype.catch = function (onRejected) {
+      return this.then(null, onRejected);
     }
 
-    let promise = new MyPromise((resolve, reject) => {
-      resolve('同步任务执行')
-    })
-    promise.then(data => {
+    let p = new Promise((resolve, reject) => {
       setTimeout(() => {
-        console.log(data + 1)
-      }, 2000);
-    }).then(data => {
-      console.log(data + 2)
-    }).then(data => {
-      console.log(data + 3)
+        resolve('同步数据')
+      }, 3000);
     })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    p.then((value) => {
+      console.log(value)
+    }).then(data => {
+      console.log(data + '1111')
+    })
 
 
 
