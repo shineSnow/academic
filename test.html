@@ -334,6 +334,111 @@
     //   return obj;
 
     // }
+
+
+
+    function Person() {
+  
+    } 
+
+    Person.prototype.name = "jack";
+    Person.prototype.age = 20;
+    Person.prototype.job = 'cooker';
+    Person.prototype.sayName = function() {
+      console.log(this.name);
+    } 
+
+    var person1 = new Person();
+    person1.sayName();  // "jack"
+
+
+    console.log(typeof Person)
+    console.log(typeof person1)
+
+    var person2 = new Person();
+    person2.name="rose"
+    person2.sayName();    //"jack"  
+    console.log(person1.sayName = person2.sayName);  //true
+
+
+
+    function superType () {
+      this.value="super";
+      this.color=["blue","yellow","red"];
+    }
+
+
+    function suberType() {
+      this.name="jack";
+      this.age=13;
+      suberType.call(this);
+    }
+
+    function inheritPrototype(subType,superType) {
+      var prototype = Object.create(superType.prototype);
+      prototype.constractor=subType;
+      subType.prototype=prototype
+    }
+
+    inheritPrototype(suberType,superType);
+
+
+    function objectFactory() {
+      var obj = new Object();
+      Constructor = [].shift.call(arguments);
+      obj.__proto__ = Constructor.prototype;
+      var ret = Constructor.apply(obj,arguments);
+      return typeof ret === 'object' ? ret : obj;
+    }
+
+    function Otaku (name, age) {
+    this.name = name;
+    this.age = age;
+
+    this.habit = 'Games';
+    }
+
+    Otaku.prototype.strength = 60;
+
+    Otaku.prototype.sayYourName = function () {
+    console.log('I am ' + this.name);
+    }
+    var person = objectFactory(Otaku,'kevin',18)
+    console.log(person.name)
+    console.log(person.age)
+    console.log(person.habit)
+
+
+
+
+function multiFn(a,b,c) {return a*b*c}
+
+function curry (fn,args) {
+  var len = fn.length;
+  var args = args || [];
+  return function () {
+    var newArgs = args.concat([].slice.call(arguments));
+    if(newArgs.length < len) {
+      return curry.call(this,fn,newArgs);
+    } else {
+      return fn.apply(this,newArgs)
+    }
+  }
+}
+
+var multi = curry(multiFn)
+multi(2)(3)(4);
+multi(2,3,4);
+multi(2)(3,4);
+multi(2,3)(4);
+
+console.log(multi(2)(3)(4))
+console.log(multi(2,3,4))
+console.log(multi(2)(3,4))
+console.log(multi(2,3)(4))
+
+
+
   </script>
 </body>
 

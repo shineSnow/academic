@@ -1,6 +1,11 @@
 ## js核心问题
 
+[toc]
+
+
+
 ### 一、JavaScript 的 typeof 返回哪些数据类型？  
+
 首先，JavaScript 中一共有两大数据类型：
 - 基础类型
 - 引用类型
@@ -206,5 +211,4 @@ https://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&mid=2651550928&idx=1&sn=0912e5
 
 ###参考链接  
 - https://www.zhihu.com/search?type=content&q=%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98  
-
 

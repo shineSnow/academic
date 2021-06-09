@@ -1,6 +1,9 @@
 # 重点
 
+[toc]
+
 ### js
+
 ---
 ### 1. http的相关问题   
  1. https与http有什么区别和联系?  
@@ -13,27 +16,28 @@
     [http2.0的优劣](https://blog.csdn.net/u012657197/article/details/77877840)  
 
  3. *http常见的状态码?*  
+
    	简单版  
+   	
+   		100  Continue	继续，一般在发送post请求时，已发送了http header之后服务端将返回此信息，表示确认，之后发送具体参数信息  
+   	
+   		200  OK 		正常返回信息  
+   		201  Created  	请求成功并且服务器创建了新的资源  
+   		202  Accepted 	服务器已接受请求，但尚未处理  
+   	
+   		301  Moved Permanently  请求的网页已永久移动到新位置。  
+   		302 Found  		临时性重定向。  
+   		303 See Other  	临时性重定向，且总是使用 GET 请求新的 URI。  
+   		304  Not Modified 自从上次请求后，请求的网页未修改过。  
+   	
+   		400 Bad Request  服务器无法理解请求的格式，客户端不应当尝试再次使用相同的内容发起请求。
+   		401 Unauthorized 请求未授权。
+   		403 Forbidden  	禁止访问。
+   		404 Not Found  	找不到如何与 URI 相匹配的资源。
+   	
+   		500 Internal Server Error  最常见的服务器端错误。
+   		503 Service Unavailable 服务器端暂时无法处理请求（可能是过载或维护）。
 
-  		100  Continue	继续，一般在发送post请求时，已发送了http header之后服务端将返回此信息，表示确认，之后发送具体参数信息  
-
-  		200  OK 		正常返回信息  
-  		201  Created  	请求成功并且服务器创建了新的资源  
-  		202  Accepted 	服务器已接受请求，但尚未处理  
-
-  		301  Moved Permanently  请求的网页已永久移动到新位置。  
-  		302 Found  		临时性重定向。  
-  		303 See Other  	临时性重定向，且总是使用 GET 请求新的 URI。  
-  		304  Not Modified 自从上次请求后，请求的网页未修改过。  
-
-  		400 Bad Request  服务器无法理解请求的格式，客户端不应当尝试再次使用相同的内容发起请求。
-  		401 Unauthorized 请求未授权。
-  		403 Forbidden  	禁止访问。
-  		404 Not Found  	找不到如何与 URI 相匹配的资源。
-
-  		500 Internal Server Error  最常见的服务器端错误。
-  		503 Service Unavailable 服务器端暂时无法处理请求（可能是过载或维护）。
-  	
 
     完整版
 
@@ -41,7 +45,7 @@
         1**(信息类)：表示接收到请求并且继续处理  
         100——客户必须继续发出请求  
         101——客户要求服务器根据请求转换HTTP协议版本  
-
+    
         2**(响应成功)：表示动作被成功接收、理解和接受  
         200——表明该请求被成功地完成，所请求的资源发送回客户端  
         201——提示知道新文件的URL  
@@ -50,7 +54,7 @@
         204——请求收到，但返回信息为空  
         205——服务器完成了请求，用户代理必须复位当前已经浏览过的文件   
         206——服务器已经完成了部分用户的GET请求
-
+    
         3**(重定向类)：为了完成指定的动作，必须接受进一步处理  
         300——请求的资源可在多处得到  
         301——本网页被永久性转移到另一个URL   
@@ -60,7 +64,7 @@
         305——请求的资源必须从服务器指定的地址得到  
         306——前一版本HTTP中使用的代码，现行版本中不再使用  
         307——申明请求的资源临时性删除
-
+    
         4**(客户端错误类)：请求包含错误语法或不能正确执行  
         400——客户端请求有语法错误，不能被服务器所理解  
         401——请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用  
@@ -101,7 +105,7 @@
         415——请求资源不支持请求项目格式  
         416——请求中包含Range请求头字段，在当前请求资源范围内没有range指示值，请求也不包含If-Range请求头字段  
         417——服务器不满足请求Expect头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求长。   
-
+    
         5**(服务端错误类)：服务器不能正确执行一个正确的请求  
         HTTP 500 - 服务器遇到错误，无法完成请求  
         　　HTTP 500.100 - 内部服务器错误 - ASP 错误  
@@ -128,7 +132,7 @@
         传输数据  
         server -> client FIN=1,ACK=1,seq=w,ack=u+1;   
         client -> server ACK=1,seq=u+1.ack=w+1;  
-[http传输过程超详解](https://www.cnblogs.com/kongxy/p/4615226.html) 
+  [http传输过程超详解](https://www.cnblogs.com/kongxy/p/4615226.html) 
 
         页面渲染过程    
     [页面渲染参考](https://www.cnblogs.com/dojo-lzz/p/3983335.html)   
@@ -136,14 +140,14 @@
         现代浏览器渲染页面的过程是这样的：解析HTML以构建DOM树 –> 构建渲染树 –> 布局渲染树 –> 绘制渲染树。
 
         DOM树是由HTML文件中的标签排列组成，渲染树是在DOM树中加入CSS或HTML中的style样式而形成。渲染树只包含需要显示在页面中的DOM元素，像<head>元素或display属性值为none的元素都不在渲染树中。
-
+         
         在浏览器还没接收到完整的HTML文件时，它就开始渲染页面了，在遇到外部链入的脚本标签或样式标签或图片时，会再次发送HTTP请求重复上述的步骤。在收到CSS文件后会对已经渲染的页面重新渲染，加入它们应有的样式，图片文件加载完立刻显示在相应位置。在这一过程中可能会触发页面的重绘或重排。
 
     重绘或重排。    [连接](https://blog.csdn.net/qq_20544669/article/details/80494475)  
             当DOM的变化影响了元素的几何属性（宽和高）——比如改变边框宽度或给段落增加文字，导致行数增加——浏览器需要重新计算元素的集合属性，同样其他元素的集合属性和位置也会受到影响。浏览器会使渲染树中受到影响的部分失效，并重新构造渲染树。这个过程称为“重排”。完成重排后，浏览器会重新绘制受影响的部分到屏幕中，该过程称为“重绘”（比如改变一个元素的背景色并不影响几何属性）。  
 
             重排：当页面布局和几何属性改变时就需要“重排”。下述情况会发生重排：
-
+         
             添加或删除可见的DOM元素。
             元素的位置、尺寸（内外边距、边框厚度、宽高等属性）改变
             内容改变（文本改变或图片被另一个不同尺寸的图片替代）
@@ -152,21 +156,21 @@
               "重绘"不一定需要"重排"，比如改变某个网页元素的颜色，就只会触发"重绘"，不会触发"重排"，因为布局没有改变。但是，"重排"必然导致"重绘"，比如改变一个网页元素的位置，就会同时触发"重排"和"重绘"，因为布局改变了。
         最小化重绘和重排 
           重回和重排代价可能会很昂贵，因此一个好的提高程序响应速度的策略就是减少此类操作的发生。为了减少发生的次数，应该合并多次对DOM和样式的修改，然后依次处理掉。
-
+         
           上述示例中有三个样式被改变，每一个都会影响元素的几何结构，会导致浏览器触发三次重排，可以优化，合并操作 
-
+         
         1、使用cssText属性实现
         var el = document.getElementById('myDiv');
         el.style.cssText = 'border-left:1px; border-right: 2px; padding: 5px;'ar el = documen
-
+         
         2、修改css的class名称
-
+         
         批量修改DOM 
           当需要对DOM元素进行一系列操作，可以通过以下步骤来减少重绘和重排的次数： 
         1、使元素脱离文档流（重排） 
         2、对应用多重改变 
         3、把元素带回文档（重排）
-
+         
         有三种基本方法可以使DOM脱离文档流： 
         1、隐藏元素，应用修改，重新显示 
         2、使用文档片段在当前DOM之外构建一个子树，再把它拷贝回文档（推荐） 
@@ -174,7 +178,7 @@
 
  5. 认识http的基本信息.  
  [重点参考链接,](http://www.cnblogs.com/ranyonsue/p/5984001.html)  
- [http详解搜索百度](https://blog.csdn.net/u013219814/article/details/56290792)  
+    [http详解搜索百度](https://blog.csdn.net/u013219814/article/details/56290792)  
  6. OSI，TCP/IP，五层协议的体系结构，以及各层协议   
  [http的七层协议](https://blog.csdn.net/a5582ddff/article/details/77731537)  
 
@@ -186,31 +190,31 @@
         每一层的协议如下：  
 
             物理层：RJ45、CLOCK、IEEE802.3 （中继器，集线器）
-
+         
             数据链路：PPP、FR、HDLC、VLAN、MAC （网桥，交换机）
-
+         
             网络层：IP、ICMP、ARP、RARP、OSPF、IPX、RIP、IGRP、 （路由器）
-
+         
             传输层：TCP、UDP、SPX
-
+         
             会话层：NFS、SQL、NETBIOS、RPC
-
+         
             表示层：JPEG、MPEG、ASII
-
+         
             应用层：FTP、DNS、Telnet、SMTP、HTTP、WWW、NFS  
         每一层的作用如下:  
             物理层：通过媒介传输比特,确定机械及电气规范（比特Bit）
 
             数据链路层：将比特组装成帧和点到点的传递（帧Frame）
-
+         
             网络层：负责数据包从源到宿的传递和网际互连（包PackeT）
-
+         
             传输层：提供端到端的可靠报文传递和错误恢复（段Segment）
-
+         
             会话层：建立、管理和终止会话（会话协议数据单元SPDU）
-
+         
             表示层：对数据进行翻译、加密和压缩（表示协议数据单元PPDU）
-
+         
             应用层：允许访问OSI环境的手段（应用协议数据单元APDU）
 
 
@@ -310,7 +314,7 @@ function getMaxProfit(arr) {
 
     前端排序算法有的思想还是很简单明了的,主要算法有,冒泡排序,二分法(快排)
     如果抽到算法题目的话，应该大多都是比较开放的题目，不限定算法的实现，但是一定要求掌握其中的几种，所以冒泡排序，这种较为基础并且便于理解记忆的算法一定需要熟记于心。
- 
+     
     1. 冒泡排序   
         冒泡排序算法就是依次比较大小，小的的大的进行位置上的交换  
 ```javascript
@@ -367,7 +371,7 @@ function getFibonacci(n) {
 
     return fibarr;
 }
- ```
+```
     101. Math随机数的控制.
 ```javascript
 取[min,max]之间的值
@@ -387,7 +391,7 @@ Math.floor(Math.random()*(max-min+1)+min);
         网站允许用户在评论里上传图片，攻击者在上传图片的时候，看似提交的是个图片文件，实则是个含有JavaScript的脚本文件。该文件逃过了文件类型校验（这涉及到了恶意文件上传这个常见安全问题，但是由于和前端相关度不高因此暂不详细介绍），在服务器里存储了下来。接下来，受害者在访问这段评论的时候，浏览器会去请求这个伪装成图片的JavaScript脚本，而此时如果浏览器错误的推断了这个响应的内容类型（MIME types），那么就会把这个图片文件当做JavaScript脚本执行，于是攻击也就成功了。  
         如何防御
         浏览器根据响应内容来推断其类型，本来这是个很“智能”的功能，是浏览器强大的容错能力的体现，但是却会带来安全风险。要避免出现这样的安全问题，办法就是通过设置"X-Content-Type-Options"这个HTTP Header明确禁止浏览器去推断响应类型。
-
+    
         同样是上面的攻击场景，后端服务器返回的Content-Type建议浏览器按照图片进行内容渲染，浏览器发现有X-Content-Type-OptionsHTTP Header的存在，并且其参数值是nosniff，因此不会再去推断内容类型，而是强制按照图片进行渲染，那么因为实际上这是一段JS脚本而非真实的图片，因此这段脚本就会被浏览器当作是一个已经损坏或者格式不正确的图片来处理，而不是当作JS脚本来处理，从而最终防止了安全问题的发生。
         6. SQL注入攻击  
         SQL注入(SQL Injection)，应用程序在向后台数据库传递SQL(Structured Query Language，结构化查询语言)时，攻击者将SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令.
@@ -410,8 +414,9 @@ Math.floor(Math.random()*(max-min+1)+min);
 > 3.参数和函数不会被垃圾机制回收
 ### 7. 对象的创建,继承,对象的属性类型Object.defineProperty()
     7种创建方法,6种继承方法
-  
-        
+
+
+​        
 ```javascript
   创建对象的方法:  
 
@@ -630,7 +635,7 @@ typeof Math.sin === 'function';
 ### 11. 原生ajax,ajax的优缺点,跨越,跨域的解决方案.
     浏览器的同源策略导致了跨域
     用于隔离潜在恶意文件的重要安全机制
-
+    
     跨域的解决方案: 
 [参考链接](https://juejin.im/post/5b5ff1dfe51d4519610e26ec)
 
@@ -717,46 +722,47 @@ socket.onmessage = function(e) {
 
 ```
     6. nginx 反向代理（nginx 服务内部配置 Access-Control-Allow-Origin *）
-
+    
     7. cors 前后端协作设置请求头部，Access-Control-Allow-Origin 等头部信息
    [cors详解](https://www.cnblogs.com/keyi/p/6726089.html)
 
 ### 12. 原生,vue,react,实现懒加载和预加载.
 原生的
 [rect版本](https://segmentfault.com/a/1190000012428565)
+
 ### 13. this的理解,应用.
      匿名函数的this,初始指向window
 ### 14.dom操作
 ### 15.null和undefined的区别.
     null是一个表示"无"的对象，转为数值时为0；undefined是一个表示"无"的原始值，转为数值时为NaN。
-
+    
     当声明的变量还未被初始化时，变量的默认值为undefined。 null用来表示尚未存在的对象，常用来表示函数企图返回一个不存在的对象。
-
+    
     undefined表示"缺少值"，就是此处应该有一个值，但是还没有定义。典型用法是：
-
+    
     （1）变量被声明了，但没有赋值时，就等于undefined。
-
+    
     （2) 调用函数时，应该提供的参数没有提供，该参数等于undefined。
-
+    
     （3）对象没有赋值的属性，该属性的值为undefined。
-
+    
     （4）函数没有返回值时，默认返回undefined。
     null表示"没有对象"，即该处不应该有值。典型用法是：
-
+    
     （1） 作为函数的参数，表示该函数的参数不是对象。
-
+    
     （2） 作为对象原型链的终点。
 
 ### 16.new操作符具体干了什么呢?
     1. 创建了一个新对象,并且this变量引用该对象,同时还继承了该函数的原型.
     2. 属性和方法被加到this引用的对象中.
     3. 新创建的对象有this所引用,并且最后隐式的返回this.
-
+    
     1.创建一个空对象 obj;
     2.将新创建的空对象的隐式原型指向其构造函数的显示原型。
     3.使用 call 改变 this 的指向
     4.如果无返回值或者返回一个非对象值，则将 obj 返回作为新对象；如果返回值是一个新对象的话那么直接直接返回该对象。
-
+    
     所以我们可以看到，在 new 的过程中，我们是使用 call 改变了 this 的指向。
 
 ```javascript
@@ -830,7 +836,7 @@ sse.addEventListener("message",function(e) {
       8、浏览器开始下载html文档(响应报头，状态码200)，同时使用缓存;
       9、文档树建立，根据标记请求所需指定MIME类型的文件（比如css、js）,同时设置了cookie;
       10、页面开始渲染DOM，JS根据DOM API操作DOM,执行事件绑定等，页面显示完成。 
-
+    
     简洁版：
         1. 浏览器向 DNS 服务器请求解析该 URL 中的域名所对应的 IP 地址;
         2.解析出 IP 地址后，根据该 IP 地址和默认端口 80，和服务器建立TCP连接;
@@ -963,7 +969,7 @@ document.getElementById("debounce").onscroll = function(){
             .继承当前上下文的 this 关键字
             .当你的函数有且仅有一个参数的时候，是可以省略掉括号的。当你函数返回有且仅有一个表达式的时候可以省略{} 和 return；例如: 
             var people = name => 'hello' + name
-
+    
             等同于  
                 var people = (name, age) => {
                     const fullName = 'hello' + name
@@ -1038,7 +1044,7 @@ setTimeout(function() {
 
     9.promise的简单实现  
     
-```  
+```
 
 
 ### 38.https加密详解   
@@ -1066,34 +1072,34 @@ setTimeout(function() {
 [BFC](https://blog.csdn.net/xuehangongzi/article/details/80713854)  
 
     BFC，块级格式化上下文，一个创建了新的BFC的盒子是独立布局的，盒子里面的子元素的样式不会影响到外面的元素。在同一个BFC中的两个毗邻的块级盒在垂直方向（和布局方向有关系）的margin会发生折叠。W3C CSS 2.1 规范中的一个概念，它决定了元素如何对其内容进行布局，以及与其他元素的关系和相互作用。）  
-
+    
     2.BFC 的原理/BFC的布局规则
     BFC 的原理，其实也就是 BFC 的渲染规则。包括：
-
+    
     （1）BFC 内部的子元素，在垂直方向，边距会发生重叠,就是间距采用margin值大地那个，而不是叠加在一起
-
+    
     （2）BFC在页面中是独立的容器，外面的元素不会影响里面的元素，反之亦然。
-
+    
     （3）BFC区域不与旁边的float box区域重叠。（可以用来清除浮动带来的影响）。 
     （4）计算BFC的高度时，浮动的子元素也参与计算。  
 
 
     3.如何生成BFC
     有以下几种方法：
-
+    
     方法1：overflow: 不为vidible，可以让属性是 hidden、auto
-
+    
     方法2：浮动中：float的属性值不为none。意思是，只要设置了浮动，当前元素就创建了BFC。
-
+    
     方法3：定位中：只要posiiton的值不是 static或者是relative即可，可以是absolute或fixed，也就生成了一个BFC。
-
+    
     方法4：display为inline-block, table-cell, table-caption, flex, inline-flex
-
+    
     BFC 原理解释说明
-
+    
     (1)解决 margin 重叠
     当父元素和子元素发生 margin 重叠时，解决办法：给子元素或父元素创建BFC。
-
+    
     上文提到的一条规则：与浮动元素相邻的已生成BFC的元素不能与浮动元素相互覆盖。利用该特性可以作为多栏布局的一种实现方式。
 ```css
     html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
@@ -1117,7 +1123,7 @@ setTimeout(function() {
 
 
 5. css3的新特性
- 
+
 6. 伪类和伪元素
 
 7. 盒模型
@@ -1157,12 +1163,7 @@ setTimeout(function() {
 ### 11. 解释下 CSS sprites，以及你要如何在页面或网站中使用它。
 
 `CSS Sprites`其实就是把网页中一些背景图片整合到一张图片文件中，再利用CSS的“background-image”，“background- repeat”，“background-position”的组合进行背景定位，background-position可以用数字能精确的定位出背景图片的位置。这样可以减少很多图片请求的开销，因为请求耗时比较长；请求虽然可以并发，但是也有限制，一般浏览器都是6个。对于未来而言，就不需要这样做了，因为有了`http2`。
-### 12.优雅降级与渐进增强
-
-### 13.xhtml是什么
-[链接](https://blog.csdn.net/suacker/article/details/2446471)
-
-### 14.对css预编译器有所了解吗？less sass postcss
+### 
 
 
 
@@ -1211,6 +1212,7 @@ setTimeout(function() {
 
 ## 3.深入Vue2.x的虚拟DOM diff原理  
 [vdom实现](https://blog.csdn.net/m6i37jk/article/details/78140159)  
+
 ## 4. vue一般概念面试题  
 [vue一般概念面试题](https://blog.csdn.net/zxy9602/article/details/79642877)  
 
